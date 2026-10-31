@@ -1,0 +1,157 @@
+Функция в PostgreSQL - это объект БД, принимающий аргументы и возвращающий результат.
+
+Типы функций:
+1. Скалярные функции: возвращают одно значение.
+2. Табличные функции: возвращают таблицу.
+3. Агрегатные функции: выполняют вычисления над набором записей.
+
+Функции создаются при помощи команды "CREATE FUNCTION". Внутри функции:
+1. Часть команды "RETURNS" позволяет указывать тип данных возвращаемого результата.
+2. Часть процедурного блока "DECLARE" позволяет создавать дополнительные переменные.
+3. Части процедурного блока "BEGIN" и "END" задают границы блока кода.
+4. Инструкция "RETURN" позволяет указывать возвращаемый результат.
+5. Часть команды "LANGUAGE" позволяет указывать интерпретатор для выполнения тела функции.
+6. Символы "$$" позволяют выделить тело функции как единый строковый литерал, избавляя от необходимости экранировать
+обычные одинарные кавычки внутри кода функции.
+7. Символы ":=" работают как оператор присваивания.
+8. Модификатор аргумента "OUT" позволяет помечать параметры функции как возвращаемые значения.
+9. Модификатор аргумента "INOUT" позволяет помечать параметры функции и как входящие аргументы функции, и как
+возвращаемые значения.
+10. Модификатор "DEFAULT" позволяет указывать значение по умолчанию для параметра функции.
+11. Модификатор аргумента "VARIADIC" позволяет передавать в качестве аргумента функции массив значений какого-то типа
+данных.
+12. Функция "UNNEST" получает массив и преобразовывает его в таблицу с одним полем.
+13. Команда "DROP FUNCTION" удаляет функцию.
+
+Примеры функций в PostgreSQL:
+
+1. Функция, использующая части команды "RETURNS" и "LANGUAGE", части процедурного блока "DECLARE", "BEGIN" и "END", и
+инструкцию "RETURN":
+
+CREATE FUNCTION get_users_count()
+	RETURNS INTEGER AS $$
+	DECLARE users_count INTEGER;
+	BEGIN
+		SELECT COUNT(*)
+		    INTO users_count
+		    FROM users;
+		RETURN users_count;
+	END;
+	$$ LANGUAGE plpgsql;
+
+SELECT get_users_count();
+
+2. Функция, использующая параметры:
+
+CREATE FUNCTION get_user_bonuses(user_id INTEGER, percent INTEGER)
+	RETURNS INTEGER AS $$
+	DECLARE user_balance INTEGER; user_bonus INTEGER;
+	BEGIN
+		SELECT balance
+			INTO user_balance
+			FROM wallets
+			WHERE wallets.user_id = get_user_bonuses.user_id;
+		IF user_balance IS NULL THEN
+			RAISE EXCEPTION 'User with ID % not found', user_id;
+		END IF;
+		user_bonus := (user_balance * percent) / 100;
+		RETURN user_bonus;
+	END;
+	$$ LANGUAGE plpgsql;
+
+SELECT get_user_bonuses(2, 5);
+
+3. Функция, использующая модификатор аргумента "OUT":
+
+CREATE FUNCTION get_users_bound(OUT min_age INTEGER, OUT max_age INTEGER)
+	AS $$
+		BEGIN
+			SELECT MIN(age), MAX (age)
+				INTO min_age, max_age
+				FROM users
+		END;
+	$$ LANGUAGE plpgsql;
+
+SELECT get_users_bound();
+SELECT (get_users_bound()).*;
+SELECT * FROM get_users_bound();
+
+4. Функция, использующая модификатор аргумента "INOUT":
+
+CREATE FUNCTION get_user_pay_info(INOUT user_id INTEGER, OUT pay_sum INTEGER, OUT is_low_pay_sum BOOLEAN)
+	AS $$
+		BEGIN
+			SELECT SUM(users_pays.pay_sum), (SUM(users_pays.pay_sum) < 1000)
+				INTO get_user_pay_info.pay_sum, get_user_pay_info.is_low_pay_sum
+				FROM users_pays
+				WHERE users_pays.user_id = get_user_pay_info.user_id
+				GROUP BY users_pays.user_id;
+
+			IF get_user_pay_info.pay_sum IS NULL THEN
+				RAISE EXCEPTION 'User with ID % not found', get_user_pay_info.user_id;
+			END IF;
+		END;
+	$$ LANGUAGE plpgsql;
+
+SELECT get_user_pay_info(1);
+SELECT * FROM get_user_pay_info(1);
+
+5. Функция, использующая модификатор "DEFAULT":
+
+CREATE FUNCTION add_numbers(a NUMERIC, b NUMERIC DEFAULT 0)
+	RETURNS NUMERIC AS $$
+		BEGIN
+			RETURN a + b;
+		END;
+	$$ LANGUAGE plpgsql;
+
+SELECT add_numbers(1);
+SELECT add_numbers(1, 2);
+
+6. Функция, использующая модификатор аргумента "VARIADIC":
+
+CREATE FUNCTION sum_variadic_numbers(VARIADIC numbers INTEGER[])
+	RETURNS INTEGER AS $$
+	DECLARE total INTEGER := 0;
+		BEGIN
+			SELECT SUM(value)
+				INTO total
+				FROM UNNEST(numbers) AS value;
+				RETURN total;
+		END;
+	$$ LANGUAGE plpgsql;
+
+SELECT sum_variadic_numbers(1);
+SELECT sum_variadic_numbers(1, 2);
+SELECT sum_variadic_numbers(1, 2, 3);
+SELECT sum_variadic_numbers(VARIADIC ARRAY[1,2,3]);
+
+7. Табличные функции:
+
+CREATE FUNCTION get_users_with_balance()
+	RETURNS TABLE(id INTEGER, username VARCHAR(50), balance INTEGER) AS $$
+		BEGIN
+			RETURN QUERY
+				SELECT users.id, users.username, wallets.balance
+					FROM users
+					LEFT JOIN wallets ON wallets.user_id = users.id
+					ORDER BY users.id;
+		END;
+	$$ LANGUAGE plpgsql;
+
+SELECT get_users_with_balance();
+
+CREATE FUNCTION get_users_with_balance_two(OUT id INTEGER, OUT username VARCHAR(50), OUT balance INTEGER)
+	RETURNS SETOF RECORD AS $$
+		BEGIN
+			RETURN QUERY
+				SELECT users.id, users.username, wallets.balance
+					FROM users
+					LEFT JOIN wallets ON wallets.user_id = users.id
+					ORDER BY users.id;
+		END;
+	$$ LANGUAGE plpgsql;
+
+SELECT get_users_with_balance_two();
+
+/*--------------------------------------------------------------------------------------------------------------------*/

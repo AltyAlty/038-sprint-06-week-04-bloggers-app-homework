@@ -1,0 +1,28 @@
+Триггер в PostgreSQL - это объект БД, который автоматически срабатывает в ответ на какое-то действие или событие.
+
+Триггеры в PostgreSQL создаются путем использования команды "CREATE TRIGGER" и требуют использования типа данных
+"TRIGGER" внутри команды "CREATE FUNCTION" и специальной переменной "NEW" после инструкции "RETURN".
+
+Команда "DROP TRIGGER" удаляет триггер.
+
+Пример триггера в PostgreSQL:
+
+CREATE FUNCTION log_update()
+	RETURNS TRIGGER AS $$
+	BEGIN
+		INSERT INTO change_log (table_name, changed_at)
+		VALUES (TG_TABLE_NAME, NOW());
+		RETURN NEW;
+	END;
+	$$ LANGUAGE plpgsql;
+
+CREATE TRIGGER after_update_trigger
+	AFTER UPDATE ON users
+	FOR EACH ROW
+	EXECUTE FUNCTION log_update();
+
+UPDATE users
+	SET username = 'John'
+	WHERE username = 'Jimmy';
+
+/*--------------------------------------------------------------------------------------------------------------------*/
