@@ -1,4 +1,4 @@
-import { Column, CreateDateColumn, DeleteDateColumn, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, CreateDateColumn, DeleteDateColumn, Entity, Index, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 import { BLOG_VALIDATION_CONSTRAINTS } from '../../../../core/validation/constraints/blog.validation-constraints';
 import { Comment, type CommentList } from '../comments/comment.entity';
 import { CommentLikeData, type CommentLikeDataList } from '../comments/comment-like-data.entity';
@@ -13,6 +13,10 @@ export class Blog {
   @PrimaryGeneratedColumn('uuid', { name: 'id' })
   public id: string;
 
+  /*Создаем индекс на поле "name", так как часто используется запрос на получение блогов с сортировкой по полю "name".
+  Альтернативно для создания этого индекса можно было бы указать рядом с сущностью это:
+  "@Index('IDX_blogs_name', ['name'])".*/
+  @Index('IDX_blogs_name')
   @Column({
     name: 'name',
     type: 'varchar',

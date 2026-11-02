@@ -1,4 +1,4 @@
-import { Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryColumn } from 'typeorm';
+import { Column, CreateDateColumn, Entity, Index, JoinColumn, ManyToOne, OneToMany, PrimaryColumn } from 'typeorm';
 import { SECURITY_DEVICE_VALIDATION_CONSTRAINTS } from '../../../../core/validation/constraints/security-device.validation-constraints';
 import { Session, type SessionList } from '../auth/session.entity';
 import { User } from '../users/users.entity';
@@ -11,6 +11,8 @@ export class SecurityDevice {
   @PrimaryColumn('uuid', { name: 'device_id' })
   public deviceId: string;
 
+  /*Создаем индекс на поле "userId", так как часто используется запрос на получение всех устройств пользователя.*/
+  @Index('IDX_security_devices_user_id')
   @Column({ name: 'user_id', type: 'uuid', nullable: false })
   public userId: string;
 

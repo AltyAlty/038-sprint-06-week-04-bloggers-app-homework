@@ -22,7 +22,7 @@
     "migration:generate": "cross-env NODE_ENV=development typeorm-ts-node-commonjs migration:generate -d ./src/migrations/config/typeorm.config.ts",
     "migration:run": "cross-env NODE_ENV=development typeorm-ts-node-commonjs migration:run -d ./src/migrations/config/typeorm.config.ts",
     "migration:revert": "cross-env NODE_ENV=development typeorm-ts-node-commonjs migration:revert -d ./src/migrations/config/typeorm.config.ts",
-    "migration:create": "cross-env NODE_ENV=development typeorm-ts-node-commonjs migration:create ./src/migrations/"
+    "migration:create": "cross-env NODE_ENV=development typeorm-ts-node-commonjs migration:create "
   },
   "dependencies": {
     "@nestjs-modules/mailer": "^4.0.0",

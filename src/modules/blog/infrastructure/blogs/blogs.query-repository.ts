@@ -42,7 +42,7 @@ export class BlogsQueryRepository {
     /*Последовательно выполняем запрос данных и подсчет общего количества элементов.*/
     const [items, totalCount]: [BlogList, number] = await this.blogsRepository.findAndCount({
       where,
-      order: { [sortField]: sortDirection },
+      order: { [sortField]: sortDirection, id: 'ASC' },
       skip,
       take: dto.pageSize,
     });

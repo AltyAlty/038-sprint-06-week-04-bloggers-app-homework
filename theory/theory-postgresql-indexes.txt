@@ -102,6 +102,28 @@ TypeORM при создании FK в сущности.
 берущего не все записи из таблицы, а только прошедшие какое-то условие. Чтобы PostgreSQL использовал частичный индекс,
 нужно в запросах указывать условие из этого частичного индекса.
 
+Поскольку TypeORM не предоставляет функционала для задания направлений для полей, нужно использовать миграции для
+частичных индексов, поля которых имеют разные направления, например:
+
+import { MigrationInterface, QueryRunner } from 'typeorm';
+
+/*Создаем миграцию для добавления в таблицу блогов частичного индекса, у которого поля направлены в разные стороны,
+поскольку TypeORM не позволяет указывать направления.*/
+export class AddBlogPartialIndex1793645018871 implements MigrationInterface {
+  public async up(queryRunner: QueryRunner): Promise<void> {
+    /*Создаем частичный индекс по полям "createdAt" и "id", так как часто используется запрос на получение блогов, где
+    по умолчанию используется сортировка по полю "createdAt" по убыванию и по полю "id" по возрастанию, при этом такой
+    запрос не должен возвращать soft удаленные блоги.*/
+    await queryRunner.query(
+      `CREATE INDEX "IDX_blogs_created_at_id_active" ON "blogs" ("created_at" DESC, "id" ASC) WHERE "deleted_at" IS NULL`
+    );
+  }
+
+  public async down(queryRunner: QueryRunner): Promise<void> {
+    await queryRunner.query(`DROP INDEX "public"."IDX_blogs_created_at_id_active"`);
+  }
+}
+
 /*--------------------------------------------------------------------------------------------------------------------*/
 
 Кластеризованный (clustered) индекс - это индекс, физический порядок записей в котором совпадает с порядком самой
@@ -127,6 +149,26 @@ TypeORM при создании FK в сущности.
 этот токен встречается. Такие индексы большие и медленно строятся по сравнению с B-Tree, но очень быстро осуществляют
 поиск. TypeORM не предоставляет функционала для работы с GIN индексами, поэтому для работы с ними можно использовать
 миграции, отключая опцию "synchronize" в параметрах декоратора "@Index()" из TypeORM.
+
+Для создания GIN индекса можно использовать расширение pg_trgm для PostgreSQL через миграцию, например:
+
+import { MigrationInterface, QueryRunner } from 'typeorm';
+
+/*Создаем миграцию для добавления GIN индекса на поле "name" сущности для блогов, используя расширение pg_trgm. Этот GIN
+индекс нужен, так как при поиске блогов с оператором "ILIKE" используется поиск по части строки не через префикс и
+B-Tree не поможет с таким поиском.*/
+export class AddGinTrgmIndexOnBlogName1793637421577 implements MigrationInterface {
+  public async up(queryRunner: QueryRunner): Promise<void> {
+    /*Включаем расширение pg_trgm, если еще не включено*/
+    await queryRunner.query(`CREATE EXTENSION IF NOT EXISTS pg_trgm;`);
+    /*Создаем GIN индекс на поле "name".*/
+    await queryRunner.query(`CREATE INDEX "IDX_blogs_name_trgm" ON "blogs" USING GIN ("name" gin_trgm_ops);`);
+  }
+
+  public async down(queryRunner: QueryRunner): Promise<void> {
+    await queryRunner.query(`DROP INDEX IF EXISTS "IDX_blogs_name_trgm";`);
+  }
+}
 
 /*--------------------------------------------------------------------------------------------------------------------*/
 

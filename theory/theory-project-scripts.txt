@@ -30,6 +30,6 @@
 18. Генерация миграции: cross-env NODE_ENV=development typeorm-ts-node-commonjs migration:generate -d ./src/migrations/config/typeorm.config.ts
 19. Применение всех миграций, которые еще не были приняты, в порядке их отметок времени: cross-env NODE_ENV=development typeorm-ts-node-commonjs migration:run -d ./src/migrations/config/typeorm.config.ts
 20. Откат последней примененной миграции: cross-env NODE_ENV=development typeorm-ts-node-commonjs migration:revert -d ./src/migrations/config/typeorm.config.ts
-21. Создание пустого файла миграции: cross-env NODE_ENV=development typeorm-ts-node-commonjs migration:create ./src/migrations/
+21. Создание пустого файла миграции: cross-env NODE_ENV=development typeorm-ts-node-commonjs migration:create
 
 /*--------------------------------------------------------------------------------------------------------------------*/

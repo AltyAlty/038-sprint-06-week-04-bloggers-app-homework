@@ -1,4 +1,4 @@
-import { Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, CreateDateColumn, Entity, Index, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
 import { SecurityDevice } from '../security-devices/security-device.entity';
 import { User } from '../users/users.entity';
 import { CreateSessionDomainDTO } from './domain-dto/create-session.domain-dto';
@@ -6,6 +6,11 @@ import { UpdateSessionDomainDTO } from './domain-dto/update-session.domain-dto';
 
 /*Класс для сущности пользовательской сессии.*/
 @Entity({ name: 'sessions', schema: 'public' })
+/*Создаем составной индекс по полям "userId", "deviceId" и "iat", так как часто используется запрос на получение
+пользовательской сессии по этим полям. Как побочный эффект этот индекс также поможет при удалении пользовательской
+сессии по полям "userId", "deviceId" и "iat" или по полям "userId" и "deviceId", а также поможет при удалении всех
+пользовательских сессий кроме текущей по полю "userId".*/
+@Index('IDX_sessions_user_id_device_id_iat', ['userId', 'deviceId', 'iat'])
 export class Session {
   @PrimaryGeneratedColumn('uuid', { name: 'id' })
   public id: string;
@@ -29,9 +34,6 @@ export class Session {
     default: (): string => 'CURRENT_TIMESTAMP',
   })
   public createdAt: Date;
-
-  // @Column({ name: 'test', type: 'varchar', length: 100, nullable: true })
-  // public test: string;
 
   @ManyToOne((): typeof User => User, (user: User): SessionList => user.sessions, {
     nullable: false,

@@ -37,7 +37,7 @@ pnpm run migration:run
 pnpm run migration:revert
 
 5.4 Создание пустого файла миграции:
-"migration:create": "cross-env NODE_ENV=development typeorm-ts-node-commonjs migration:create ./src/migrations/"
+"migration:create": "cross-env NODE_ENV=development typeorm-ts-node-commonjs migration:create "
 
 Запуск:
 pnpm run migration:create ./src/migrations/migration_description

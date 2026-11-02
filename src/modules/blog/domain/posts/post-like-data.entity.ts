@@ -4,6 +4,7 @@ import {
   CreateDateColumn,
   DeleteDateColumn,
   Entity,
+  Index,
   JoinColumn,
   ManyToOne,
   PrimaryGeneratedColumn,
@@ -21,6 +22,12 @@ import { Post } from './post.entity';
 @Entity({ name: 'post_likes_data', schema: 'public' })
 @Check(`"like_status" IN ('Like', 'Dislike')`)
 @Unique('UQ_post_user', ['postId', 'userId'])
+/*Создаем частичный индекс по полям "postId" и "addedAt", так как часто используется запрос на получение данных о трех
+последних лайках поста со статусом "Like" с сортировкой по полю "addedAt" по умолчанию, при этом такой запрос не должен
+возвращать soft удаленные данные о лайках постов.*/
+@Index('IDX_post_likes_data_post_id_added_at_newest_likes', ['postId', 'addedAt'], {
+  where: `"like_status" = 'Like' AND "deleted_at" IS NULL`,
+})
 export class PostLikeData {
   @PrimaryGeneratedColumn('uuid', { name: 'id' })
   public id: string;
