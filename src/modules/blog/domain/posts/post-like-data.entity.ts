@@ -7,9 +7,10 @@ import {
   Index,
   JoinColumn,
   ManyToOne,
-  PrimaryGeneratedColumn,
+  PrimaryColumn,
   Unique,
 } from 'typeorm';
+import { v7 } from 'uuid';
 import { POST_VALIDATION_CONSTRAINTS } from '../../../../core/validation/constraints/post.validation-constraints';
 import { User } from '../../../user/domain/users/users.entity';
 import { Blog } from '../blogs/blog.entity';
@@ -29,7 +30,7 @@ import { Post } from './post.entity';
   where: `"like_status" = 'Like' AND "deleted_at" IS NULL`,
 })
 export class PostLikeData {
-  @PrimaryGeneratedColumn('uuid', { name: 'id' })
+  @PrimaryColumn('uuid', { name: 'id' })
   public id: string;
 
   @Column({ name: 'blog_id', type: 'uuid', nullable: false })
@@ -86,6 +87,7 @@ export class PostLikeData {
 
   public static create(dto: CreatePostLikeDataDomainDTO): PostLikeData {
     const postLikeData: PostLikeData = new PostLikeData();
+    postLikeData.id = v7();
     postLikeData.blogId = dto.blogId;
     postLikeData.postId = dto.postId;
     postLikeData.userId = dto.userId;

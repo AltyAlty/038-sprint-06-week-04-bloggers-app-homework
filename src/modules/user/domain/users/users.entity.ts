@@ -1,4 +1,5 @@
-import { Column, CreateDateColumn, DeleteDateColumn, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, CreateDateColumn, DeleteDateColumn, Entity, OneToMany, PrimaryColumn } from 'typeorm';
+import { v7 } from 'uuid';
 import { USER_VALIDATION_CONSTRAINTS } from '../../../../core/validation/constraints/user.validation-constraints';
 import { Comment, type CommentList } from '../../../blog/domain/comments/comment.entity';
 import { CommentLikeData, type CommentLikeDataList } from '../../../blog/domain/comments/comment-like-data.entity';
@@ -15,7 +16,7 @@ import { CreateUserDomainDTO } from './domain-dto/create-user.domain-dto';
 /*Класс для сущности пользователя.*/
 @Entity({ name: 'users', schema: 'public' })
 export class User {
-  @PrimaryGeneratedColumn('uuid', { name: 'id' })
+  @PrimaryColumn('uuid', { name: 'id' })
   public id: string;
 
   @Column({
@@ -100,6 +101,7 @@ export class User {
 
   public static create(dto: CreateUserDomainDTO): User {
     const user: User = new User();
+    user.id = v7();
     user.login = dto.login;
     user.originalEmail = dto.originalEmail;
     user.email = dto.email;

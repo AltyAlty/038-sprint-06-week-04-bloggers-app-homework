@@ -1,6 +1,6 @@
 import { CommandHandler, EventBus, ICommandHandler } from '@nestjs/cqrs';
-import { randomUUID } from 'crypto';
 import { add } from 'date-fns';
+import { v7 } from 'uuid';
 import { Argon2Adapter } from '../../../../../core/security/cryptography/argon2.adapter';
 import { AuthRepository } from '../../../infrastructure/auth/auth.repository';
 import { UsersRepository } from '../../../infrastructure/users/users.repository';
@@ -57,7 +57,7 @@ export class RegisterUserCommandHandler implements ICommandHandler<RegisterUserC
     /*Просим репозиторий "UsersRepository" сохранить пользователя в БД.*/
     await this.usersRepository.save(user);
     /*Генерируем код подтверждения регистрации пользователя.*/
-    const confirmationCode: string = randomUUID();
+    const confirmationCode: string = v7();
 
     /*Генерируем дату истечения кода подтверждения регистрации пользователя.*/
     const expirationDate: Date = add(new Date(), {

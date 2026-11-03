@@ -1,6 +1,6 @@
 import { CommandHandler, EventBus, ICommandHandler } from '@nestjs/cqrs';
-import { randomUUID } from 'crypto';
 import { add } from 'date-fns';
+import { v7 } from 'uuid';
 import { AuthRepository } from '../../../infrastructure/auth/auth.repository';
 import { UsersRepository } from '../../../infrastructure/users/users.repository';
 import { AuthConfig } from '../../../config/auth.config';
@@ -27,7 +27,7 @@ export class SendPasswordRecoveryCodeCommandHandler implements ICommandHandler<S
     /*Если пользователь был найден, то получаем ID пользователя.*/
     const userId: string = user.id;
     /*Генерируем код восстановления пароля пользователя.*/
-    const passwordRecoveryCode: string = randomUUID();
+    const passwordRecoveryCode: string = v7();
 
     /*Генерируем дату истечения кода восстановления пароля пользователя.*/
     const expirationDate: Date = add(new Date(), {

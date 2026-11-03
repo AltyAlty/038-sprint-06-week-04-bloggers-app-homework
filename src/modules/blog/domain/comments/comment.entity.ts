@@ -7,8 +7,9 @@ import {
   JoinColumn,
   ManyToOne,
   OneToMany,
-  PrimaryGeneratedColumn,
+  PrimaryColumn,
 } from 'typeorm';
+import { v7 } from 'uuid';
 import { COMMENT_VALIDATION_CONSTRAINTS } from '../../../../core/validation/constraints/comment.validation-constraints';
 import { User } from '../../../user/domain/users/users.entity';
 import { Blog } from '../blogs/blog.entity';
@@ -23,7 +24,7 @@ import { UpdateCommentLikesCountDomainDTO } from './domain-dto/update-comment-li
 @Check(`"likes_count" >= 0`)
 @Check(`"dislikes_count" >= 0`)
 export class Comment {
-  @PrimaryGeneratedColumn('uuid', { name: 'id' })
+  @PrimaryColumn('uuid', { name: 'id' })
   public id: string;
 
   @Column({ name: 'blog_id', type: 'uuid', nullable: false })
@@ -93,6 +94,7 @@ export class Comment {
 
   public static create(dto: CreateCommentDomainDTO): Comment {
     const comment: Comment = new Comment();
+    comment.id = v7();
     comment.blogId = dto.blogId;
     comment.postId = dto.postId;
     comment.userId = dto.userId;

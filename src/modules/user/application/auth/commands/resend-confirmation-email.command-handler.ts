@@ -1,6 +1,6 @@
 import { CommandHandler, EventBus, ICommandHandler } from '@nestjs/cqrs';
-import { randomUUID } from 'crypto';
 import { add } from 'date-fns';
+import { v7 } from 'uuid';
 import { AuthRepository } from '../../../infrastructure/auth/auth.repository';
 import { UsersRepository } from '../../../infrastructure/users/users.repository';
 import { DomainException, DomainExceptionCode } from '../../../../../core/exceptions/domain/domain.exception';
@@ -44,7 +44,7 @@ export class ResendConfirmationEmailCommandHandler implements ICommandHandler<Re
     const userId: string = user.id;
     /*Если регистрация пользователя еще не была подтверждена, то генерируем код подтверждения регистрации
     пользователя.*/
-    const confirmationCode: string = randomUUID();
+    const confirmationCode: string = v7();
 
     /*Генерируем дату истечения кода подтверждения регистрации пользователя.*/
     const expirationDate: Date = add(new Date(), {

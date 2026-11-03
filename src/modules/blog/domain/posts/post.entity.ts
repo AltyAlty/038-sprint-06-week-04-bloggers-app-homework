@@ -7,8 +7,9 @@ import {
   JoinColumn,
   ManyToOne,
   OneToMany,
-  PrimaryGeneratedColumn,
+  PrimaryColumn,
 } from 'typeorm';
+import { v7 } from 'uuid';
 import { POST_VALIDATION_CONSTRAINTS } from '../../../../core/validation/constraints/post.validation-constraints';
 import { Blog } from '../blogs/blog.entity';
 import { Comment, type CommentList } from '../comments/comment.entity';
@@ -23,7 +24,7 @@ import { PostLikeData, type PostLikeDataList } from './post-like-data.entity';
 @Check(`"likes_count" >= 0`)
 @Check(`"dislikes_count" >= 0`)
 export class Post {
-  @PrimaryGeneratedColumn('uuid', { name: 'id' })
+  @PrimaryColumn('uuid', { name: 'id' })
   public id: string;
 
   @Column({ name: 'blog_id', type: 'uuid', nullable: false })
@@ -91,6 +92,7 @@ export class Post {
 
   public static create(dto: CreatePostDomainDTO): Post {
     const post: Post = new Post();
+    post.id = v7();
     post.blogId = dto.blogId;
     post.title = dto.title;
     post.shortDescription = dto.shortDescription;

@@ -1,4 +1,5 @@
-import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, JoinColumn, ManyToOne, PrimaryColumn } from 'typeorm';
+import { v7 } from 'uuid';
 import { USER_VALIDATION_CONSTRAINTS } from '../../../../core/validation/constraints/user.validation-constraints';
 import { User } from '../users/users.entity';
 import { CreateEmailConfirmationDomainDTO } from './domain-dto/create-email-confirmation.domain-dto';
@@ -7,7 +8,7 @@ import { UpdateEmailConfirmationDomainDTO } from './domain-dto/update-email-conf
 /*Класс для сущности данных о подтверждении регистрации пользователя.*/
 @Entity({ name: 'email_confirmations', schema: 'public' })
 export class EmailConfirmation {
-  @PrimaryGeneratedColumn('uuid', { name: 'id' })
+  @PrimaryColumn('uuid', { name: 'id' })
   public id: string;
 
   @Column({ name: 'user_id', type: 'uuid', nullable: false })
@@ -34,6 +35,7 @@ export class EmailConfirmation {
 
   public static create(dto: CreateEmailConfirmationDomainDTO): EmailConfirmation {
     const emailConfirmation: EmailConfirmation = new EmailConfirmation();
+    emailConfirmation.id = v7();
     emailConfirmation.userId = dto.userId;
     emailConfirmation.confirmationCode = dto.confirmationCode;
     emailConfirmation.expirationDate = dto.expirationDate;

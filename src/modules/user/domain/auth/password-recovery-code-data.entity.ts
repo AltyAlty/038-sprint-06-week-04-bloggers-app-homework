@@ -1,4 +1,5 @@
-import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, JoinColumn, ManyToOne, PrimaryColumn } from 'typeorm';
+import { v7 } from 'uuid';
 import { USER_VALIDATION_CONSTRAINTS } from '../../../../core/validation/constraints/user.validation-constraints';
 import { User } from '../users/users.entity';
 import { CreatePasswordRecoveryCodeDataDomainDTO } from './domain-dto/create-password-recovery-code-data.domain-dto';
@@ -7,7 +8,7 @@ import { UpdatePasswordRecoveryCodeDataDomainDTO } from './domain-dto/update-pas
 /*Класс для сущности данных о коде восстановления пароля пользователя.*/
 @Entity({ name: 'password_recovery_codes_data', schema: 'public' })
 export class PasswordRecoveryCodeData {
-  @PrimaryGeneratedColumn('uuid', { name: 'id' })
+  @PrimaryColumn('uuid', { name: 'id' })
   public id: string;
 
   @Column({ name: 'user_id', type: 'uuid', nullable: false })
@@ -34,6 +35,7 @@ export class PasswordRecoveryCodeData {
 
   public static create(dto: CreatePasswordRecoveryCodeDataDomainDTO): PasswordRecoveryCodeData {
     const passwordRecoveryCodeData: PasswordRecoveryCodeData = new PasswordRecoveryCodeData();
+    passwordRecoveryCodeData.id = v7();
     passwordRecoveryCodeData.userId = dto.userId;
     passwordRecoveryCodeData.passwordRecoveryCode = dto.passwordRecoveryCode;
     passwordRecoveryCodeData.expirationDate = dto.expirationDate;

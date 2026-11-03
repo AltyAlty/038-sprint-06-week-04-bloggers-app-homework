@@ -1,4 +1,5 @@
-import { Column, CreateDateColumn, DeleteDateColumn, Entity, Index, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, CreateDateColumn, DeleteDateColumn, Entity, Index, OneToMany, PrimaryColumn } from 'typeorm';
+import { v7 } from 'uuid';
 import { BLOG_VALIDATION_CONSTRAINTS } from '../../../../core/validation/constraints/blog.validation-constraints';
 import { Comment, type CommentList } from '../comments/comment.entity';
 import { CommentLikeData, type CommentLikeDataList } from '../comments/comment-like-data.entity';
@@ -10,7 +11,7 @@ import { UpdateBlogDomainDTO } from './domain-dto/update-blog.domain-dto';
 /*Класс для сущности блога.*/
 @Entity({ name: 'blogs', schema: 'public' })
 export class Blog {
-  @PrimaryGeneratedColumn('uuid', { name: 'id' })
+  @PrimaryColumn('uuid', { name: 'id' })
   public id: string;
 
   /*Создаем индекс на поле "name", так как часто используется запрос на получение блогов с сортировкой по полю "name".
@@ -75,6 +76,7 @@ export class Blog {
 
   public static create(dto: CreateBlogDomainDTO): Blog {
     const blog: Blog = new Blog();
+    blog.id = v7();
     blog.name = dto.name;
     blog.description = dto.description;
     blog.websiteUrl = dto.websiteUrl;

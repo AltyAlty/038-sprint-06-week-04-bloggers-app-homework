@@ -1,6 +1,6 @@
 import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
 import { JwtService, JwtSignOptions } from '@nestjs/jwt';
-import { randomUUID } from 'crypto';
+import { v7 } from 'uuid';
 import { AuthRepository } from '../../../infrastructure/auth/auth.repository';
 import { SecurityDevicesRepository } from '../../../infrastructure/security-devices/security-devices.repository';
 import { AuthConfig } from '../../../config/auth.config';
@@ -23,7 +23,7 @@ export class AuthUserCommandHandler implements ICommandHandler<AuthUserCommand> 
     /*Получаем ID пользователя.*/
     const userId: string = userLocalAuthContext.id;
     /*Генерируем ID пользовательского устройства.*/
-    const deviceId: string = randomUUID();
+    const deviceId: string = v7();
     /*Получаем значение заголовка "user-agent".*/
     const userAgent: string = ipAndUserAgent.userAgent;
     /*Получаем IP-адрес пользователя.*/

@@ -6,9 +6,10 @@ import {
   Entity,
   JoinColumn,
   ManyToOne,
-  PrimaryGeneratedColumn,
+  PrimaryColumn,
   Unique,
 } from 'typeorm';
+import { v7 } from 'uuid';
 import { COMMENT_VALIDATION_CONSTRAINTS } from '../../../../core/validation/constraints/comment.validation-constraints';
 import { User } from '../../../user/domain/users/users.entity';
 import { Blog } from '../blogs/blog.entity';
@@ -23,7 +24,7 @@ import { UpdateCommentLikeDataDomainDTO } from './domain-dto/update-comment-like
 @Check(`"like_status" IN ('Like', 'Dislike')`)
 @Unique('UQ_comment_user', ['commentId', 'userId'])
 export class CommentLikeData {
-  @PrimaryGeneratedColumn('uuid', { name: 'id' })
+  @PrimaryColumn('uuid', { name: 'id' })
   public id: string;
 
   @Column({ name: 'blog_id', type: 'uuid', nullable: false })
@@ -91,6 +92,7 @@ export class CommentLikeData {
 
   public static create(dto: CreateCommentLikeDataDomainDTO): CommentLikeData {
     const commentLikeData: CommentLikeData = new CommentLikeData();
+    commentLikeData.id = v7();
     commentLikeData.blogId = dto.blogId;
     commentLikeData.postId = dto.postId;
     commentLikeData.commentId = dto.commentId;

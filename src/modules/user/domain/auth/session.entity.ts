@@ -1,4 +1,5 @@
-import { Column, CreateDateColumn, Entity, Index, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, CreateDateColumn, Entity, Index, JoinColumn, ManyToOne, PrimaryColumn } from 'typeorm';
+import { v7 } from 'uuid';
 import { SecurityDevice } from '../security-devices/security-device.entity';
 import { User } from '../users/users.entity';
 import { CreateSessionDomainDTO } from './domain-dto/create-session.domain-dto';
@@ -12,7 +13,7 @@ import { UpdateSessionDomainDTO } from './domain-dto/update-session.domain-dto';
 пользовательских сессий кроме текущей по полю "userId".*/
 @Index('IDX_sessions_user_id_device_id_iat', ['userId', 'deviceId', 'iat'])
 export class Session {
-  @PrimaryGeneratedColumn('uuid', { name: 'id' })
+  @PrimaryColumn('uuid', { name: 'id' })
   public id: string;
 
   @Column({ name: 'user_id', type: 'uuid', nullable: false })
@@ -53,6 +54,7 @@ export class Session {
 
   public static create(dto: CreateSessionDomainDTO): Session {
     const session: Session = new Session();
+    session.id = v7();
     session.userId = dto.userId;
     session.deviceId = dto.deviceId;
     session.iat = dto.iat;
