@@ -1,13 +1,13 @@
 import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
 import { JwtService, JwtSignOptions } from '@nestjs/jwt';
 import { v7 } from 'uuid';
-import { AuthRepository } from '../../../infrastructure/auth/auth.repository';
-import { SecurityDevicesRepository } from '../../../infrastructure/security-devices/security-devices.repository';
 import { AuthConfig } from '../../../config/auth.config';
 import { Session } from '../../../domain/auth/session.entity';
 import { SecurityDevice } from '../../../domain/security-devices/security-device.entity';
-import { AuthUserCommand } from './auth-user.command';
 import { UserTokensDataDTO } from './dto/user-tokens-data.dto';
+import { AuthUserCommand } from './auth-user.command';
+import { AuthRepository } from '../../../infrastructure/auth/auth.repository';
+import { SecurityDevicesRepository } from '../../../infrastructure/security-devices/security-devices.repository';
 
 /*Обработчик команды для аутентификации пользователя.*/
 @CommandHandler(AuthUserCommand)

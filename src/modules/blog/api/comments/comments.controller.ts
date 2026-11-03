@@ -1,19 +1,19 @@
 import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, Put, UseGuards } from '@nestjs/common';
 import { CommandBus, QueryBus } from '@nestjs/cqrs';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
+import { SETTINGS } from '../../../../core/settings/settings';
 import { UpdateCommentByIdInputDTO } from './input-dto/update-comment-by-id.input-dto';
 import { UpdateCommentLikeStatusByIdInputDTO } from './input-dto/update-comment-like-status-by-id.input-dto';
 import { CommentOutputDTO } from './output-dto/comment.output-dto';
-import { AccessJwtAuthGuard } from '../../../../core/guards/access-jwt-auth/access-jwt-auth.guard';
 import { UserAccessJwtAuthContextDTO } from '../../../../core/guards/access-jwt-auth/dto/user-access-jwt-auth-context.dto';
-import { OptionalAccessJwtAuthGuard } from '../../../../core/guards/optional-access-jwt-auth/optional-access-jwt-auth.guard';
-import { SETTINGS } from '../../../../core/settings/settings';
-import { CommentsControllerSwaggerDecorators } from '../../../../core/swagger/decorators/blog-module/comments-controller.swagger-decorators';
 import { ExtractUserDataFromRequest } from '../../../user/api/auth/decorators/param-extraction/extract-user-data-from-request.param-decorator';
+import { AccessJwtAuthGuard } from '../../../../core/guards/access-jwt-auth/access-jwt-auth.guard';
+import { OptionalAccessJwtAuthGuard } from '../../../../core/guards/optional-access-jwt-auth/optional-access-jwt-auth.guard';
 import { MarkCommentAsDeletedByIdCommand } from '../../application/comments/commands/mark-comment-as-deleted-by-id.command';
 import { UpdateCommentByIdCommand } from '../../application/comments/commands/update-comment-by-id.command';
 import { UpdateCommentLikeStatusByIdCommand } from '../../application/comments/commands/update-comment-like-status-by-id.command';
 import { GetCommentByIdQuery } from '../../application/comments/queries/get-comment-by-id.query';
+import { CommentsControllerSwaggerDecorators } from '../../../../core/swagger/decorators/blog-module/comments-controller.swagger-decorators';
 
 /*Контроллер для комментариев.*/
 @ApiTags(SETTINGS.COMMENTS_API_TAG)

@@ -2,15 +2,15 @@ import { Module } from '@nestjs/common';
 import { APP_FILTER } from '@nestjs/core';
 import { ThrottlerModule } from '@nestjs/throttler';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
-import { configModule } from './config.module';
 import { CoreConfig, Environments } from './core/config/core.config';
+import { configModule } from './config.module';
 import { CoreModule } from './core/core.module';
-import { DomainExceptionFilter } from './core/exception-filters/domain/domain.exception-filter';
 import { BlogModule } from './modules/blog/blog.module';
 import { UserModule } from './modules/user/user.module';
 import { TestingModule } from './testing/testing.module';
+import { AppController } from './app.controller';
+import { AppService } from './app.service';
+import { DomainExceptionFilter } from './core/exception-filters/domain/domain.exception-filter';
 
 /*Главный обязательный модуль приложения.*/
 @Module({

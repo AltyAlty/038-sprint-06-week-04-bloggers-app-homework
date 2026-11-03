@@ -1,9 +1,9 @@
 import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
+import { User } from '../../../domain/users/users.entity';
+import { MarkUserAsDeletedByIdCommand } from './mark-user-as-deleted-by-id.command';
 import { CommentsRepository } from '../../../../blog/infrastructure/comments/comments.repository';
 import { UsersRepository } from '../../../infrastructure/users/users.repository';
 import { DomainException, DomainExceptionCode } from '../../../../../core/exceptions/domain/domain.exception';
-import { User } from '../../../domain/users/users.entity';
-import { MarkUserAsDeletedByIdCommand } from './mark-user-as-deleted-by-id.command';
 
 /*Обработчик команды для soft удаления пользователя по ID.*/
 @CommandHandler(MarkUserAsDeletedByIdCommand)

@@ -1,8 +1,8 @@
 import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
-import { BlogsRepository } from '../../../infrastructure/blogs/blogs.repository';
-import { BlogOutputDTO } from '../../../api/blogs/output-dto/blog.output-dto';
 import { Blog } from '../../../domain/blogs/blog.entity';
+import { BlogOutputDTO } from '../../../api/blogs/output-dto/blog.output-dto';
 import { CreateBlogCommand } from './create-blog.command';
+import { BlogsRepository } from '../../../infrastructure/blogs/blogs.repository';
 
 /*Обработчик команды для создания блога.*/
 @CommandHandler(CreateBlogCommand)

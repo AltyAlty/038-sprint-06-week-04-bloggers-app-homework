@@ -1,10 +1,10 @@
 import { Column, CreateDateColumn, DeleteDateColumn, Entity, Index, OneToMany, PrimaryColumn } from 'typeorm';
 import { v7 } from 'uuid';
-import { BLOG_VALIDATION_CONSTRAINTS } from '../../../../core/validation/constraints/blog.validation-constraints';
 import { Comment, type CommentList } from '../comments/comment.entity';
 import { CommentLikeData, type CommentLikeDataList } from '../comments/comment-like-data.entity';
 import { Post, type PostList } from '../posts/post.entity';
 import { PostLikeData, type PostLikeDataList } from '../posts/post-like-data.entity';
+import { BLOG_VALIDATION_CONSTRAINTS } from '../../../../core/validation/constraints/blog.validation-constraints';
 import { CreateBlogDomainDTO } from './domain-dto/create-blog.domain-dto';
 import { UpdateBlogDomainDTO } from './domain-dto/update-blog.domain-dto';
 

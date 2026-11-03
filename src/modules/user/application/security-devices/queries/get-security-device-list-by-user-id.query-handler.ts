@@ -1,11 +1,11 @@
 import { IQueryHandler, QueryHandler } from '@nestjs/cqrs';
-import { SecurityDevicesQueryRepository } from '../../../infrastructure/security-devices/security-devices.query-repository';
+import { SecurityDeviceList } from '../../../domain/security-devices/security-device.entity';
 import {
   SecurityDeviceListOutputDTO,
   SecurityDeviceOutputDTO,
 } from '../../../api/security-devices/output-dto/security-device.output-dto';
-import { SecurityDeviceList } from '../../../domain/security-devices/security-device.entity';
 import { GetSecurityDeviceListByUserIdQuery } from './get-security-device-list-by-user-id.query';
+import { SecurityDevicesQueryRepository } from '../../../infrastructure/security-devices/security-devices.query-repository';
 
 /*Обработчик запроса для поиска пользовательских устройств по ID пользователя.*/
 @QueryHandler(GetSecurityDeviceListByUserIdQuery)

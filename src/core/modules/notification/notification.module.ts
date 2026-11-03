@@ -1,8 +1,8 @@
 import { Module } from '@nestjs/common';
 import { MailerModule } from '@nestjs-modules/mailer';
 import { NotificationConfig } from './config/notification.config';
-import { NotificationConfigModule } from './config/notification-config.module';
 import { EmailManager } from './email-manager/email.manager';
+import { NotificationConfigModule } from './config/notification-config.module';
 
 /*Модуль для работы с уведомлениями.*/
 @Module({

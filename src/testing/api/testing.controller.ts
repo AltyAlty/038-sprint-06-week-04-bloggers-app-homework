@@ -1,7 +1,7 @@
 import { Controller, Delete, HttpCode, HttpStatus } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
-import { TestingService } from '../application/testing.service';
 import { SETTINGS } from '../../core/settings/settings';
+import { TestingService } from '../application/testing.service';
 import { TestingControllerSwaggerDecorators } from '../../core/swagger/decorators/testing-module/testing-controller.swagger-decorators';
 
 /*Контроллер для тестирования приложения.*/

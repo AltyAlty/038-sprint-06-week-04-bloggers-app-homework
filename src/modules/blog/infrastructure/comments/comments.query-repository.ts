@@ -1,10 +1,10 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { FindOptionsWhere, In, Repository } from 'typeorm';
-import { SortDirectionInputDTO } from '../../../../core/pagination/input-dto/sort-direction.input-dto';
-import { GetCommentListByPostIdQueryInputDTO } from '../../api/posts/input-dto/query/get-comment-list-by-post-id-query.input-dto';
 import { Comment, CommentList } from '../../domain/comments/comment.entity';
 import { CommentLikeData, CommentLikeDataList } from '../../domain/comments/comment-like-data.entity';
+import { SortDirectionInputDTO } from '../../../../core/pagination/input-dto/sort-direction.input-dto';
+import { GetCommentListByPostIdQueryInputDTO } from '../../api/posts/input-dto/query/get-comment-list-by-post-id-query.input-dto';
 
 /*Query-репозиторий для комментариев .*/
 @Injectable()

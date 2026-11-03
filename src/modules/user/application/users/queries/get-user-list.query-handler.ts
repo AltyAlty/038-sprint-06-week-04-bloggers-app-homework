@@ -1,9 +1,9 @@
 import { IQueryHandler, QueryHandler } from '@nestjs/cqrs';
-import { UsersQueryRepository } from '../../../infrastructure/users/users.query-repository';
+import { UserList } from '../../../domain/users/users.entity';
 import { PaginationMetaDataOutputDTO } from '../../../../../core/pagination/output-dto/pagination-meta-data.output-dto';
 import { UserListOutputDTO, UserOutputDTO } from '../../../api/users/output-dto/user.output-dto';
-import { UserList } from '../../../domain/users/users.entity';
 import { GetUserListQuery } from './get-user-list.query';
+import { UsersQueryRepository } from '../../../infrastructure/users/users.query-repository';
 
 /*Обработчик запроса для поиска пользователей.*/
 @QueryHandler(GetUserListQuery)

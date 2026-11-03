@@ -1,15 +1,15 @@
 import { Controller, Delete, Get, HttpCode, HttpStatus, Param, UseGuards } from '@nestjs/common';
 import { CommandBus, QueryBus } from '@nestjs/cqrs';
 import { ApiCookieAuth, ApiTags } from '@nestjs/swagger';
+import { SETTINGS } from '../../../../core/settings/settings';
 import { SecurityDeviceListOutputDTO } from './output-dto/security-device.output-dto';
 import { UserRefreshJwtAuthContextDTO } from '../../../../core/guards/refresh-jwt-auth/dto/user-refresh-jwt-auth-context.dto';
+import { ExtractUserDataFromRequest } from '../auth/decorators/param-extraction/extract-user-data-from-request.param-decorator';
 import { RefreshJwtAuthGuard } from '../../../../core/guards/refresh-jwt-auth/refresh-jwt-auth.guard';
-import { SETTINGS } from '../../../../core/settings/settings';
-import { SecurityDevicesControllerSwaggerDecorators } from '../../../../core/swagger/decorators/user-module/security-devices-controller.swagger-decorators';
 import { RevokeAllSessionsExceptCurrentOneCommand } from '../../application/auth/commands/revoke-all-sessions-except-current-one.command';
 import { RevokeSessionBySecurityDeviceIdCommand } from '../../application/auth/commands/revoke-session-by-security-device-id.command';
 import { GetSecurityDeviceListByUserIdQuery } from '../../application/security-devices/queries/get-security-device-list-by-user-id.query';
-import { ExtractUserDataFromRequest } from '../auth/decorators/param-extraction/extract-user-data-from-request.param-decorator';
+import { SecurityDevicesControllerSwaggerDecorators } from '../../../../core/swagger/decorators/user-module/security-devices-controller.swagger-decorators';
 
 /*Контроллер для пользовательских устройств.*/
 @ApiTags(SETTINGS.SECURITY_DEVICES_API_TAG)

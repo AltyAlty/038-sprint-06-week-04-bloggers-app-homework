@@ -1,12 +1,12 @@
 import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
 import { JwtService, JwtSignOptions } from '@nestjs/jwt';
-import { AuthRepository } from '../../../infrastructure/auth/auth.repository';
-import { SecurityDevicesRepository } from '../../../infrastructure/security-devices/security-devices.repository';
 import { AuthConfig } from '../../../config/auth.config';
 import { Session } from '../../../domain/auth/session.entity';
 import { SecurityDevice } from '../../../domain/security-devices/security-device.entity';
-import { CreateNewAccessAndRefreshTokensCommand } from './create-new-access-and-refresh-tokens.command';
 import { UserTokensDataDTO } from './dto/user-tokens-data.dto';
+import { CreateNewAccessAndRefreshTokensCommand } from './create-new-access-and-refresh-tokens.command';
+import { AuthRepository } from '../../../infrastructure/auth/auth.repository';
+import { SecurityDevicesRepository } from '../../../infrastructure/security-devices/security-devices.repository';
 
 /*Обработчик команды для создания новых AT и RT.*/
 @CommandHandler(CreateNewAccessAndRefreshTokensCommand)

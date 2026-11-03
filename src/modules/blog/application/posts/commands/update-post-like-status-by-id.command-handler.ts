@@ -1,11 +1,11 @@
 import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
-import { PostsRepository } from '../../../infrastructure/posts/posts.repository';
-import { PostLikeStatusInputDTO } from '../../../api/posts/input-dto/update-post-like-status-by-id.input-dto';
-import { DomainException, DomainExceptionCode } from '../../../../../core/exceptions/domain/domain.exception';
-import { PostLikeStatusDomainDTO } from '../../../domain/posts/domain-dto/post-like-status.domain-dto';
 import { Post } from '../../../domain/posts/post.entity';
 import { PostLikeData } from '../../../domain/posts/post-like-data.entity';
+import { PostLikeStatusInputDTO } from '../../../api/posts/input-dto/update-post-like-status-by-id.input-dto';
+import { PostLikeStatusDomainDTO } from '../../../domain/posts/domain-dto/post-like-status.domain-dto';
 import { UpdatePostLikeStatusByIdCommand } from './update-post-like-status-by-id.command';
+import { PostsRepository } from '../../../infrastructure/posts/posts.repository';
+import { DomainException, DomainExceptionCode } from '../../../../../core/exceptions/domain/domain.exception';
 
 /*Обработчик команды для изменения статуса лайка поста по ID поста.*/
 @CommandHandler(UpdatePostLikeStatusByIdCommand)

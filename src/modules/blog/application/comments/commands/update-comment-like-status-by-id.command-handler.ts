@@ -1,11 +1,11 @@
 import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
-import { CommentsRepository } from '../../../infrastructure/comments/comments.repository';
-import { CommentLikeStatusInputDTO } from '../../../api/comments/input-dto/update-comment-like-status-by-id.input-dto';
-import { DomainException, DomainExceptionCode } from '../../../../../core/exceptions/domain/domain.exception';
 import { Comment } from '../../../domain/comments/comment.entity';
 import { CommentLikeData } from '../../../domain/comments/comment-like-data.entity';
+import { CommentLikeStatusInputDTO } from '../../../api/comments/input-dto/update-comment-like-status-by-id.input-dto';
 import { CommentLikeStatusDomainDTO } from '../../../domain/comments/domain-dto/comment-like-status.domain-dto';
 import { UpdateCommentLikeStatusByIdCommand } from './update-comment-like-status-by-id.command';
+import { CommentsRepository } from '../../../infrastructure/comments/comments.repository';
+import { DomainException, DomainExceptionCode } from '../../../../../core/exceptions/domain/domain.exception';
 
 /*Обработчик команды для изменения статуса лайка комментария по ID комментария.*/
 @CommandHandler(UpdateCommentLikeStatusByIdCommand)

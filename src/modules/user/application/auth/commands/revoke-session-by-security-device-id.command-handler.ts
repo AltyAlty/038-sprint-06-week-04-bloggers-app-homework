@@ -1,9 +1,9 @@
 import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
+import { SecurityDevice } from '../../../domain/security-devices/security-device.entity';
+import { RevokeSessionBySecurityDeviceIdCommand } from './revoke-session-by-security-device-id.command';
 import { AuthRepository } from '../../../infrastructure/auth/auth.repository';
 import { SecurityDevicesRepository } from '../../../infrastructure/security-devices/security-devices.repository';
 import { DomainException, DomainExceptionCode } from '../../../../../core/exceptions/domain/domain.exception';
-import { SecurityDevice } from '../../../domain/security-devices/security-device.entity';
-import { RevokeSessionBySecurityDeviceIdCommand } from './revoke-session-by-security-device-id.command';
 
 /*Обработчик команды для отзыва пользовательской сессии по ID пользовательского устройства.*/
 @CommandHandler(RevokeSessionBySecurityDeviceIdCommand)

@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
-import { DomainException, DomainExceptionCode } from '../../exceptions/domain/domain.exception';
 import { UserRefreshJwtAuthContextDTO } from './dto/user-refresh-jwt-auth-context.dto';
+import { DomainException, DomainExceptionCode } from '../../exceptions/domain/domain.exception';
 
 /*Гард для авторизации по Refresh JWT, используя библиотеку Passport.js.*/
 @Injectable()

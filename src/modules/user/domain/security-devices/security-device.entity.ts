@@ -1,7 +1,7 @@
 import { Column, CreateDateColumn, Entity, Index, JoinColumn, ManyToOne, OneToMany, PrimaryColumn } from 'typeorm';
-import { SECURITY_DEVICE_VALIDATION_CONSTRAINTS } from '../../../../core/validation/constraints/security-device.validation-constraints';
 import { Session, type SessionList } from '../auth/session.entity';
 import { User } from '../users/users.entity';
+import { SECURITY_DEVICE_VALIDATION_CONSTRAINTS } from '../../../../core/validation/constraints/security-device.validation-constraints';
 import { CreateSecurityDeviceDomainDTO } from './domain-dto/create-security-device.domain-dto';
 import { UpdateSecurityDeviceDomainDTO } from './domain-dto/update-security-device.domain-dto';
 

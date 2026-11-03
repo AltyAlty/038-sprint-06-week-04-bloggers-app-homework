@@ -1,9 +1,9 @@
 import { IQueryHandler, QueryHandler } from '@nestjs/cqrs';
-import { PostsQueryRepository } from '../../../infrastructure/posts/posts.query-repository';
+import { PostList } from '../../../domain/posts/post.entity';
 import { PaginationMetaDataOutputDTO } from '../../../../../core/pagination/output-dto/pagination-meta-data.output-dto';
 import { PostListOutputDTO, PostOutputDTO } from '../../../api/posts/output-dto/post.output-dto';
-import { PostList } from '../../../domain/posts/post.entity';
 import { GetPostListQuery } from './get-post-list.query';
+import { PostsQueryRepository } from '../../../infrastructure/posts/posts.query-repository';
 
 /*Обработчик запроса для поиска постов.*/
 @QueryHandler(GetPostListQuery)

@@ -1,12 +1,12 @@
 import { IQueryHandler, QueryHandler } from '@nestjs/cqrs';
-import { PostsQueryRepository } from '../../../infrastructure/posts/posts.query-repository';
+import { Post } from '../../../domain/posts/post.entity';
+import { PostLikeData } from '../../../domain/posts/post-like-data.entity';
 import { NewestPostLikeListOutputDTO } from '../../../api/posts/output-dto/newest-post-like.output-dto';
 import { PostOutputDTO } from '../../../api/posts/output-dto/post.output-dto';
 import { PostLikeStatusOutputDTO } from '../../../api/posts/output-dto/post-like-status.output-dto';
-import { DomainException, DomainExceptionCode } from '../../../../../core/exceptions/domain/domain.exception';
-import { Post } from '../../../domain/posts/post.entity';
-import { PostLikeData } from '../../../domain/posts/post-like-data.entity';
 import { GetPostByIdQuery } from './get-post-by-id.query';
+import { PostsQueryRepository } from '../../../infrastructure/posts/posts.query-repository';
+import { DomainException, DomainExceptionCode } from '../../../../../core/exceptions/domain/domain.exception';
 
 /*Обработчик запроса для поиска поста по ID.*/
 @QueryHandler(GetPostByIdQuery)

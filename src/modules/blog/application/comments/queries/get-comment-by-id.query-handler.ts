@@ -1,11 +1,11 @@
 import { IQueryHandler, QueryHandler } from '@nestjs/cqrs';
-import { CommentsQueryRepository } from '../../../infrastructure/comments/comments.query-repository';
-import { CommentOutputDTO } from '../../../api/comments/output-dto/comment.output-dto';
-import { CommentLikeStatusOutputDTO } from '../../../api/comments/output-dto/comment-like-status.output-dto';
-import { DomainException, DomainExceptionCode } from '../../../../../core/exceptions/domain/domain.exception';
 import { Comment } from '../../../domain/comments/comment.entity';
 import { CommentLikeData } from '../../../domain/comments/comment-like-data.entity';
+import { CommentOutputDTO } from '../../../api/comments/output-dto/comment.output-dto';
+import { CommentLikeStatusOutputDTO } from '../../../api/comments/output-dto/comment-like-status.output-dto';
 import { GetCommentByIdQuery } from './get-comment-by-id.query';
+import { CommentsQueryRepository } from '../../../infrastructure/comments/comments.query-repository';
+import { DomainException, DomainExceptionCode } from '../../../../../core/exceptions/domain/domain.exception';
 
 /*Обработчик запроса для поиска поста по ID.*/
 @QueryHandler(GetCommentByIdQuery)

@@ -1,10 +1,10 @@
 import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
+import { Blog } from '../../../domain/blogs/blog.entity';
+import { MarkBlogAsDeletedByIdCommand } from './mark-blog-as-deleted-by-id.command';
 import { BlogsRepository } from '../../../infrastructure/blogs/blogs.repository';
 import { CommentsRepository } from '../../../infrastructure/comments/comments.repository';
 import { PostsRepository } from '../../../infrastructure/posts/posts.repository';
 import { DomainException, DomainExceptionCode } from '../../../../../core/exceptions/domain/domain.exception';
-import { Blog } from '../../../domain/blogs/blog.entity';
-import { MarkBlogAsDeletedByIdCommand } from './mark-blog-as-deleted-by-id.command';
 
 /*Обработчик команды для soft удаления блога по ID.*/
 @CommandHandler(MarkBlogAsDeletedByIdCommand)

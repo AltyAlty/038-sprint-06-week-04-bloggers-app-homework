@@ -1,7 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { IsNotEmpty, IsString, Length } from 'class-validator';
-import { Trim } from '../../../../../core/decorators/transformation/trim.transformation-decorator';
 import { COMMENT_VALIDATION_CONSTRAINTS } from '../../../../../core/validation/constraints/comment.validation-constraints';
+import { Trim } from '../../../../../core/decorators/transformation/trim.transformation-decorator';
 
 /*Input DTO для изменения комментария по ID с валидацией при помощи библиотеки class-validator.*/
 export class UpdateCommentByIdInputDTO {

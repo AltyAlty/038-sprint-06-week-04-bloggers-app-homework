@@ -1,9 +1,9 @@
 import { IQueryHandler, QueryHandler } from '@nestjs/cqrs';
-import { UsersQueryRepository } from '../../../infrastructure/users/users.query-repository';
-import { AuthUserDataOutputDTO } from '../../../api/auth/output-dto/auth-user-data.output-dto';
-import { DomainException, DomainExceptionCode } from '../../../../../core/exceptions/domain/domain.exception';
 import { User } from '../../../domain/users/users.entity';
+import { AuthUserDataOutputDTO } from '../../../api/auth/output-dto/auth-user-data.output-dto';
 import { GetAuthUserDataByAccessTokenQuery } from './get-auth-user-data-by-access-token.query';
+import { UsersQueryRepository } from '../../../infrastructure/users/users.query-repository';
+import { DomainException, DomainExceptionCode } from '../../../../../core/exceptions/domain/domain.exception';
 
 /*Обработчик запроса для получения данных о пользователе по ID пользователя при предоставлении AT.*/
 @QueryHandler(GetAuthUserDataByAccessTokenQuery)

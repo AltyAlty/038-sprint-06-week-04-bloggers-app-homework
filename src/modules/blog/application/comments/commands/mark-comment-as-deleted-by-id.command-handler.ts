@@ -1,8 +1,8 @@
 import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
-import { CommentsRepository } from '../../../infrastructure/comments/comments.repository';
-import { DomainException, DomainExceptionCode } from '../../../../../core/exceptions/domain/domain.exception';
 import { Comment } from '../../../domain/comments/comment.entity';
 import { MarkCommentAsDeletedByIdCommand } from './mark-comment-as-deleted-by-id.command';
+import { CommentsRepository } from '../../../infrastructure/comments/comments.repository';
+import { DomainException, DomainExceptionCode } from '../../../../../core/exceptions/domain/domain.exception';
 
 /*Обработчик команды для soft удаления комментария по ID.*/
 @CommandHandler(MarkCommentAsDeletedByIdCommand)

@@ -1,9 +1,9 @@
 import { Injectable } from '@nestjs/common';
 import { PassportStrategy } from '@nestjs/passport';
 import { Strategy } from 'passport-local';
+import { UserLocalAuthContextDTO } from './dto/user-local-auth-context.dto';
 import { AuthService } from '../../../modules/user/application/auth/auth.service';
 import { DomainException, DomainExceptionCode } from '../../exceptions/domain/domain.exception';
-import { UserLocalAuthContextDTO } from './dto/user-local-auth-context.dto';
 
 /*Стратегия для аутентификации по логину или email и паролю, используя библиотеку Passport.js.*/
 @Injectable()

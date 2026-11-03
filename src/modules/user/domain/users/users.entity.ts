@@ -1,6 +1,5 @@
 import { Column, CreateDateColumn, DeleteDateColumn, Entity, OneToMany, PrimaryColumn } from 'typeorm';
 import { v7 } from 'uuid';
-import { USER_VALIDATION_CONSTRAINTS } from '../../../../core/validation/constraints/user.validation-constraints';
 import { Comment, type CommentList } from '../../../blog/domain/comments/comment.entity';
 import { CommentLikeData, type CommentLikeDataList } from '../../../blog/domain/comments/comment-like-data.entity';
 import { PostLikeData, type PostLikeDataList } from '../../../blog/domain/posts/post-like-data.entity';
@@ -11,6 +10,7 @@ import {
 } from '../auth/password-recovery-code-data.entity';
 import { Session, type SessionList } from '../auth/session.entity';
 import { SecurityDevice, type SecurityDeviceList } from '../security-devices/security-device.entity';
+import { USER_VALIDATION_CONSTRAINTS } from '../../../../core/validation/constraints/user.validation-constraints';
 import { CreateUserDomainDTO } from './domain-dto/create-user.domain-dto';
 
 /*Класс для сущности пользователя.*/

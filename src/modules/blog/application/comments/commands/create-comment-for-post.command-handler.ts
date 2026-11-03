@@ -1,12 +1,12 @@
 import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
-import { CommentsRepository } from '../../../infrastructure/comments/comments.repository';
-import { PostsRepository } from '../../../infrastructure/posts/posts.repository';
-import { CommentOutputDTO } from '../../../api/comments/output-dto/comment.output-dto';
-import { CommentLikeStatusOutputDTO } from '../../../api/comments/output-dto/comment-like-status.output-dto';
-import { DomainException, DomainExceptionCode } from '../../../../../core/exceptions/domain/domain.exception';
 import { Comment } from '../../../domain/comments/comment.entity';
 import { Post } from '../../../domain/posts/post.entity';
+import { CommentOutputDTO } from '../../../api/comments/output-dto/comment.output-dto';
+import { CommentLikeStatusOutputDTO } from '../../../api/comments/output-dto/comment-like-status.output-dto';
 import { CreateCommentForPostCommand } from './create-comment-for-post.command';
+import { CommentsRepository } from '../../../infrastructure/comments/comments.repository';
+import { PostsRepository } from '../../../infrastructure/posts/posts.repository';
+import { DomainException, DomainExceptionCode } from '../../../../../core/exceptions/domain/domain.exception';
 
 /*Обработчик команды для создания комментария в посте.*/
 @CommandHandler(CreateCommentForPostCommand)

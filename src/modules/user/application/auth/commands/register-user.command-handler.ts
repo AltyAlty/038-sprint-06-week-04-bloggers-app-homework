@@ -1,16 +1,16 @@
 import { CommandHandler, EventBus, ICommandHandler } from '@nestjs/cqrs';
 import { add } from 'date-fns';
 import { v7 } from 'uuid';
-import { Argon2Adapter } from '../../../../../core/security/cryptography/argon2.adapter';
-import { AuthRepository } from '../../../infrastructure/auth/auth.repository';
-import { UsersRepository } from '../../../infrastructure/users/users.repository';
-import { normalizeEmail } from '../../../../../core/utils/email/normalize-email.util';
-import { DomainException, DomainExceptionCode } from '../../../../../core/exceptions/domain/domain.exception';
 import { AuthConfig } from '../../../config/auth.config';
+import { normalizeEmail } from '../../../../../core/utils/email/normalize-email.util';
+import { Argon2Adapter } from '../../../../../core/security/cryptography/argon2.adapter';
 import { EmailConfirmation } from '../../../domain/auth/email-confirmation.entity';
 import { User } from '../../../domain/users/users.entity';
-import { UserRegisteredEvent } from '../events/user-registered.event';
 import { RegisterUserCommand } from './register-user.command';
+import { UserRegisteredEvent } from '../events/user-registered.event';
+import { AuthRepository } from '../../../infrastructure/auth/auth.repository';
+import { UsersRepository } from '../../../infrastructure/users/users.repository';
+import { DomainException, DomainExceptionCode } from '../../../../../core/exceptions/domain/domain.exception';
 
 /*Обработчик команды для регистрации пользователя.*/
 @CommandHandler(RegisterUserCommand)

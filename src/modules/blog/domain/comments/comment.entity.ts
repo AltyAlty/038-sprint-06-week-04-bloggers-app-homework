@@ -10,11 +10,11 @@ import {
   PrimaryColumn,
 } from 'typeorm';
 import { v7 } from 'uuid';
-import { COMMENT_VALIDATION_CONSTRAINTS } from '../../../../core/validation/constraints/comment.validation-constraints';
 import { User } from '../../../user/domain/users/users.entity';
 import { Blog } from '../blogs/blog.entity';
 import { Post } from '../posts/post.entity';
 import { CommentLikeData, type CommentLikeDataList } from './comment-like-data.entity';
+import { COMMENT_VALIDATION_CONSTRAINTS } from '../../../../core/validation/constraints/comment.validation-constraints';
 import { CreateCommentDomainDTO } from './domain-dto/create-comment.domain-dto';
 import { UpdateCommentDomainDTO } from './domain-dto/update-comment.domain-dto';
 import { UpdateCommentLikesCountDomainDTO } from './domain-dto/update-comment-likes-count.domain-dto';

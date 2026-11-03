@@ -1,7 +1,7 @@
 import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
+import { RevokeSessionCommand } from './revoke-session.command';
 import { AuthRepository } from '../../../infrastructure/auth/auth.repository';
 import { SecurityDevicesRepository } from '../../../infrastructure/security-devices/security-devices.repository';
-import { RevokeSessionCommand } from './revoke-session.command';
 
 /*Обработчик команды для отзыва пользовательской сессии.*/
 @CommandHandler(RevokeSessionCommand)

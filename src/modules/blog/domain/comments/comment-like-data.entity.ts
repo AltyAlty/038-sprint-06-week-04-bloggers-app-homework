@@ -10,11 +10,11 @@ import {
   Unique,
 } from 'typeorm';
 import { v7 } from 'uuid';
-import { COMMENT_VALIDATION_CONSTRAINTS } from '../../../../core/validation/constraints/comment.validation-constraints';
 import { User } from '../../../user/domain/users/users.entity';
 import { Blog } from '../blogs/blog.entity';
 import { Post } from '../posts/post.entity';
 import { Comment } from './comment.entity';
+import { COMMENT_VALIDATION_CONSTRAINTS } from '../../../../core/validation/constraints/comment.validation-constraints';
 import { CommentLikeStatusDomainDTO } from './domain-dto/comment-like-status.domain-dto';
 import { CreateCommentLikeDataDomainDTO } from './domain-dto/create-comment-like-data.domain-dto';
 import { UpdateCommentLikeDataDomainDTO } from './domain-dto/update-comment-like-data.domain-dto';

@@ -1,12 +1,12 @@
 import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
-import { BlogsRepository } from '../../../infrastructure/blogs/blogs.repository';
-import { PostsRepository } from '../../../infrastructure/posts/posts.repository';
-import { PostOutputDTO } from '../../../api/posts/output-dto/post.output-dto';
-import { PostLikeStatusOutputDTO } from '../../../api/posts/output-dto/post-like-status.output-dto';
-import { DomainException, DomainExceptionCode } from '../../../../../core/exceptions/domain/domain.exception';
 import { Blog } from '../../../domain/blogs/blog.entity';
 import { Post } from '../../../domain/posts/post.entity';
+import { PostOutputDTO } from '../../../api/posts/output-dto/post.output-dto';
+import { PostLikeStatusOutputDTO } from '../../../api/posts/output-dto/post-like-status.output-dto';
 import { CreatePostForBlogCommand } from './create-post-for-blog.command';
+import { BlogsRepository } from '../../../infrastructure/blogs/blogs.repository';
+import { PostsRepository } from '../../../infrastructure/posts/posts.repository';
+import { DomainException, DomainExceptionCode } from '../../../../../core/exceptions/domain/domain.exception';
 
 /*Обработчик команды для создания поста в блоге.*/
 @CommandHandler(CreatePostForBlogCommand)

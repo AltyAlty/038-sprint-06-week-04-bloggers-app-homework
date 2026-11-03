@@ -1,8 +1,8 @@
 import { ApiPropertyOptional } from '@nestjs/swagger';
 import { Type } from 'class-transformer';
 import { IsEnum, IsInt, IsOptional, Min } from 'class-validator';
-import { SortDirectionInputDTO } from './sort-direction.input-dto';
 import { SETTINGS } from '../../settings/settings';
+import { SortDirectionInputDTO } from './sort-direction.input-dto';
 
 /*Input DTO для объекта с настройками пагинации по умолчанию.*/
 export class DefaultPaginationSettingsInputDTO {

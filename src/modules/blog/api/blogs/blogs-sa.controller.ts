@@ -13,6 +13,7 @@ import {
 } from '@nestjs/common';
 import { CommandBus, QueryBus } from '@nestjs/cqrs';
 import { ApiBasicAuth, ApiTags } from '@nestjs/swagger';
+import { SETTINGS } from '../../../../core/settings/settings';
 import { CreateBlogInputDTO } from './input-dto/create-blog.input-dto';
 import { CreatePostForBlogInputDTO } from './input-dto/create-post-for-blog.input-dto';
 import { GetBlogListQueryInputDTO } from './input-dto/query/get-blog-list-query.input-dto';
@@ -23,18 +24,17 @@ import { PaginationMetaDataOutputDTO } from '../../../../core/pagination/output-
 import { PostListOutputDTO, PostOutputDTO } from '../posts/output-dto/post.output-dto';
 import { BlogListOutputDTO, BlogOutputDTO } from './output-dto/blog.output-dto';
 import { UserAccessJwtAuthContextDTO } from '../../../../core/guards/access-jwt-auth/dto/user-access-jwt-auth-context.dto';
-import { BasicAuthGuard } from '../../../../core/guards/basic-auth/basic-auth.guard';
-import { SETTINGS } from '../../../../core/settings/settings';
-import { BlogsSaControllerSwaggerDecorators } from '../../../../core/swagger/decorators/blog-module/blogs-sa-controller.swagger-decorators';
 import { ExtractUserDataFromRequest } from '../../../user/api/auth/decorators/param-extraction/extract-user-data-from-request.param-decorator';
+import { BasicAuthGuard } from '../../../../core/guards/basic-auth/basic-auth.guard';
 import { CreateBlogCommand } from '../../application/blogs/commands/create-blog.command';
 import { MarkBlogAsDeletedByIdCommand } from '../../application/blogs/commands/mark-blog-as-deleted-by-id.command';
 import { UpdateBlogByIdCommand } from '../../application/blogs/commands/update-blog-by-id.command';
-import { GetBlogListQuery } from '../../application/blogs/queries/get-blog-list.query';
 import { CreatePostForBlogCommand } from '../../application/posts/commands/create-post-for-blog.command';
 import { MarkPostAsDeletedByBlogIdAndPostIdCommand } from '../../application/posts/commands/mark-post-as-deleted-by-blog-id-and-post-id.command';
 import { UpdatePostByBlogIdAndPostIdCommand } from '../../application/posts/commands/update-post-by-blog-id-and-post-id.command';
+import { GetBlogListQuery } from '../../application/blogs/queries/get-blog-list.query';
 import { GetPostListByBlogIdQuery } from '../../application/posts/queries/get-post-list-by-blog-id.query';
+import { BlogsSaControllerSwaggerDecorators } from '../../../../core/swagger/decorators/blog-module/blogs-sa-controller.swagger-decorators';
 
 /*SA-контроллер для блогов.*/
 @ApiTags(SETTINGS.BLOGS_SA_API_TAG)

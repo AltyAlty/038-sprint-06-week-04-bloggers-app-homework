@@ -1,9 +1,9 @@
 import { IQueryHandler, QueryHandler } from '@nestjs/cqrs';
-import { BlogsQueryRepository } from '../../../infrastructure/blogs/blogs.query-repository';
+import { BlogList } from '../../../domain/blogs/blog.entity';
 import { PaginationMetaDataOutputDTO } from '../../../../../core/pagination/output-dto/pagination-meta-data.output-dto';
 import { BlogListOutputDTO, BlogOutputDTO } from '../../../api/blogs/output-dto/blog.output-dto';
-import { BlogList } from '../../../domain/blogs/blog.entity';
 import { GetBlogListQuery } from './get-blog-list.query';
+import { BlogsQueryRepository } from '../../../infrastructure/blogs/blogs.query-repository';
 
 /*Обработчик запроса для поиска блогов.*/
 @QueryHandler(GetBlogListQuery)

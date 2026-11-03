@@ -1,11 +1,11 @@
 import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
+import { Blog } from '../../../domain/blogs/blog.entity';
+import { Post } from '../../../domain/posts/post.entity';
+import { MarkPostAsDeletedByBlogIdAndPostIdCommand } from './mark-post-as-deleted-by-blog-id-and-post-id.command';
 import { BlogsRepository } from '../../../infrastructure/blogs/blogs.repository';
 import { CommentsRepository } from '../../../infrastructure/comments/comments.repository';
 import { PostsRepository } from '../../../infrastructure/posts/posts.repository';
 import { DomainException, DomainExceptionCode } from '../../../../../core/exceptions/domain/domain.exception';
-import { Blog } from '../../../domain/blogs/blog.entity';
-import { Post } from '../../../domain/posts/post.entity';
-import { MarkPostAsDeletedByBlogIdAndPostIdCommand } from './mark-post-as-deleted-by-blog-id-and-post-id.command';
 
 /*Обработчик команды для soft удаления поста по ID блога и ID поста.*/
 @CommandHandler(MarkPostAsDeletedByBlogIdAndPostIdCommand)

@@ -1,11 +1,11 @@
 import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
-import { Argon2Adapter } from '../../../../../core/security/cryptography/argon2.adapter';
-import { UsersRepository } from '../../../infrastructure/users/users.repository';
-import { UserOutputDTO } from '../../../api/users/output-dto/user.output-dto';
 import { normalizeEmail } from '../../../../../core/utils/email/normalize-email.util';
-import { DomainException, DomainExceptionCode } from '../../../../../core/exceptions/domain/domain.exception';
+import { Argon2Adapter } from '../../../../../core/security/cryptography/argon2.adapter';
 import { User } from '../../../domain/users/users.entity';
+import { UserOutputDTO } from '../../../api/users/output-dto/user.output-dto';
 import { CreateConfirmedUserCommand } from './create-confirmed-user.command';
+import { UsersRepository } from '../../../infrastructure/users/users.repository';
+import { DomainException, DomainExceptionCode } from '../../../../../core/exceptions/domain/domain.exception';
 
 /*Обработчик команды для создания подтвержденного пользователя.*/
 @CommandHandler(CreateConfirmedUserCommand)

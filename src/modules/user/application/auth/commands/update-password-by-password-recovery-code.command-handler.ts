@@ -1,11 +1,11 @@
 import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
 import { Argon2Adapter } from '../../../../../core/security/cryptography/argon2.adapter';
-import { AuthRepository } from '../../../infrastructure/auth/auth.repository';
-import { UsersRepository } from '../../../infrastructure/users/users.repository';
-import { DomainException, DomainExceptionCode } from '../../../../../core/exceptions/domain/domain.exception';
 import { PasswordRecoveryCodeData } from '../../../domain/auth/password-recovery-code-data.entity';
 import { User } from '../../../domain/users/users.entity';
 import { UpdatePasswordByPasswordRecoveryCodeCommand } from './update-password-by-password-recovery-code.command';
+import { AuthRepository } from '../../../infrastructure/auth/auth.repository';
+import { UsersRepository } from '../../../infrastructure/users/users.repository';
+import { DomainException, DomainExceptionCode } from '../../../../../core/exceptions/domain/domain.exception';
 
 /*Обработчик команды для изменения пароля пользователя по коду восстановления пароля пользователя.*/
 @CommandHandler(UpdatePasswordByPasswordRecoveryCodeCommand)

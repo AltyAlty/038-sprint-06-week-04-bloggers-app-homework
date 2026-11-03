@@ -2,6 +2,7 @@ import { Body, Controller, Get, HttpCode, HttpStatus, Post, Res, UseGuards } fro
 import { CommandBus, QueryBus } from '@nestjs/cqrs';
 import { ApiTags } from '@nestjs/swagger';
 import type { Response } from 'express';
+import { SETTINGS } from '../../../../core/settings/settings';
 import { AuthUserByLoginOrEmailInputDTO } from './input-dto/auth-user-by-login-or-email.input-dto';
 import { ConfirmUserByCodeInputDTO } from './input-dto/confirm-user-by-code.input-dto';
 import { RegisterUserInputDTO } from './input-dto/register-user.input-dto';
@@ -11,16 +12,17 @@ import { SetNewPasswordByPasswordRecoveryCodeInputDTO } from './input-dto/set-ne
 import { AuthUserByLoginOrEmailOutputDTO } from './output-dto/auth-user-by-login-or-email.output-dto';
 import { AuthUserDataOutputDTO } from './output-dto/auth-user-data.output-dto';
 import { CreateNewAccessAndRefreshTokensOutputDTO } from './output-dto/create-new-access-and-refresh-tokens.output-dto';
-import { AccessJwtAuthGuard } from '../../../../core/guards/access-jwt-auth/access-jwt-auth.guard';
 import { UserAccessJwtAuthContextDTO } from '../../../../core/guards/access-jwt-auth/dto/user-access-jwt-auth-context.dto';
-import { IpAndUserAgentGuard } from '../../../../core/guards/ip-and-user-agent/ip-and-user-agent.guard';
 import { UserLocalAuthContextDTO } from '../../../../core/guards/local-auth/dto/user-local-auth-context.dto';
-import { LocalAuthGuard } from '../../../../core/guards/local-auth/local-auth.guard';
 import { UserRefreshJwtAuthContextDTO } from '../../../../core/guards/refresh-jwt-auth/dto/user-refresh-jwt-auth-context.dto';
+import { UserAgentAndIpDTO } from './decorators/param-extraction/dto/user-agent-and-ip.dto';
+import { ExtractIpAndUserAgentFromRequest } from './decorators/param-extraction/extract-ip-and-user-agent-from-request.param-decorator';
+import { ExtractUserDataFromRequest } from './decorators/param-extraction/extract-user-data-from-request.param-decorator';
+import { AccessJwtAuthGuard } from '../../../../core/guards/access-jwt-auth/access-jwt-auth.guard';
+import { IpAndUserAgentGuard } from '../../../../core/guards/ip-and-user-agent/ip-and-user-agent.guard';
+import { LocalAuthGuard } from '../../../../core/guards/local-auth/local-auth.guard';
 import { RefreshJwtAuthGuard } from '../../../../core/guards/refresh-jwt-auth/refresh-jwt-auth.guard';
 import { RequestRateLimitingGuard } from '../../../../core/guards/request-rate-limiting/request-rate-limiting.guard';
-import { SETTINGS } from '../../../../core/settings/settings';
-import { AuthControllerSwaggerDecorators } from '../../../../core/swagger/decorators/user-module/auth-controller.swagger-decorators';
 import { AuthUserCommand } from '../../application/auth/commands/auth-user.command';
 import { ConfirmUserByCodeCommand } from '../../application/auth/commands/confirm-user-by-code.command';
 import { CreateNewAccessAndRefreshTokensCommand } from '../../application/auth/commands/create-new-access-and-refresh-tokens.command';
@@ -30,9 +32,7 @@ import { RevokeSessionCommand } from '../../application/auth/commands/revoke-ses
 import { SendPasswordRecoveryCodeCommand } from '../../application/auth/commands/send-password-recovery-code.command';
 import { UpdatePasswordByPasswordRecoveryCodeCommand } from '../../application/auth/commands/update-password-by-password-recovery-code.command';
 import { GetAuthUserDataByAccessTokenQuery } from '../../application/auth/queries/get-auth-user-data-by-access-token.query';
-import { UserAgentAndIpDTO } from './decorators/param-extraction/dto/user-agent-and-ip.dto';
-import { ExtractIpAndUserAgentFromRequest } from './decorators/param-extraction/extract-ip-and-user-agent-from-request.param-decorator';
-import { ExtractUserDataFromRequest } from './decorators/param-extraction/extract-user-data-from-request.param-decorator';
+import { AuthControllerSwaggerDecorators } from '../../../../core/swagger/decorators/user-module/auth-controller.swagger-decorators';
 
 /*Контроллер для работы с аутентификацией и авторизацией.*/
 @ApiTags(SETTINGS.AUTH_API_TAG)

@@ -1,6 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { FindOptionsWhere, In, Repository, SelectQueryBuilder } from 'typeorm';
+import { Post, PostList } from '../../domain/posts/post.entity';
+import { PostLikeData } from '../../domain/posts/post-like-data.entity';
 import { SortDirectionInputDTO } from '../../../../core/pagination/input-dto/sort-direction.input-dto';
 import { GetPostListQueryInputDTO } from '../../api/posts/input-dto/query/get-post-list-query.input-dto';
 import { PostSortFieldQueryInputDTO } from '../../api/posts/input-dto/query/post-sort-field-query.input-dto';
@@ -9,8 +11,6 @@ import {
   NewestPostLikeOutputDTO,
 } from '../../api/posts/output-dto/newest-post-like.output-dto';
 import { PostLikeStatusDomainDTO } from '../../domain/posts/domain-dto/post-like-status.domain-dto';
-import { Post, PostList } from '../../domain/posts/post.entity';
-import { PostLikeData } from '../../domain/posts/post-like-data.entity';
 
 /*Query-репозиторий для постов.*/
 @Injectable()

@@ -1,10 +1,10 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { CommentsQueryRepository } from '../../../infrastructure/comments/comments.query-repository';
+import { Comment, CommentList } from '../../../domain/comments/comment.entity';
+import { CommentLikeData, CommentLikeDataList } from '../../../domain/comments/comment-like-data.entity';
 import { CommentLikeStatusOutputDTO } from './comment-like-status.output-dto';
 import { CommentatorInfoOutputDTO } from './commentator-info.output-dto';
 import { LikesInfoOutputDTO } from './likes-info.output-dto';
-import { Comment, CommentList } from '../../../domain/comments/comment.entity';
-import { CommentLikeData, CommentLikeDataList } from '../../../domain/comments/comment-like-data.entity';
+import { CommentsQueryRepository } from '../../../infrastructure/comments/comments.query-repository';
 
 /*Output DTO для комментария.*/
 export class CommentOutputDTO {

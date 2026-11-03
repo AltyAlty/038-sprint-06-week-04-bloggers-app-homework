@@ -1,8 +1,8 @@
 import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
-import { BlogsRepository } from '../../../infrastructure/blogs/blogs.repository';
-import { DomainException, DomainExceptionCode } from '../../../../../core/exceptions/domain/domain.exception';
 import { Blog } from '../../../domain/blogs/blog.entity';
 import { UpdateBlogByIdCommand } from './update-blog-by-id.command';
+import { BlogsRepository } from '../../../infrastructure/blogs/blogs.repository';
+import { DomainException, DomainExceptionCode } from '../../../../../core/exceptions/domain/domain.exception';
 
 /*Обработчик команды для изменения блога по ID.*/
 @CommandHandler(UpdateBlogByIdCommand)

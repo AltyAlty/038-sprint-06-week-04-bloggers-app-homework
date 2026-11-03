@@ -1,8 +1,8 @@
 import { CanActivate, ExecutionContext, Injectable } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
 import { Request } from 'express';
-import { IS_PUBLIC_KEY } from '../../../modules/user/api/auth/decorators/guard/public.guard-decorator';
 import { AuthConfig } from '../../../modules/user/config/auth.config';
+import { IS_PUBLIC_KEY } from '../../../modules/user/api/auth/decorators/guard/public.guard-decorator';
 import { DomainException, DomainExceptionCode } from '../../exceptions/domain/domain.exception';
 
 /*Гард для basic авторизации.*/

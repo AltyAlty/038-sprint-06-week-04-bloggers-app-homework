@@ -1,12 +1,12 @@
 import { IQueryHandler, QueryHandler } from '@nestjs/cqrs';
-import { CommentsQueryRepository } from '../../../infrastructure/comments/comments.query-repository';
-import { PostsQueryRepository } from '../../../infrastructure/posts/posts.query-repository';
-import { PaginationMetaDataOutputDTO } from '../../../../../core/pagination/output-dto/pagination-meta-data.output-dto';
-import { CommentListOutputDTO, CommentOutputDTO } from '../../../api/comments/output-dto/comment.output-dto';
-import { DomainException, DomainExceptionCode } from '../../../../../core/exceptions/domain/domain.exception';
 import { CommentList } from '../../../domain/comments/comment.entity';
 import { Post } from '../../../domain/posts/post.entity';
+import { PaginationMetaDataOutputDTO } from '../../../../../core/pagination/output-dto/pagination-meta-data.output-dto';
+import { CommentListOutputDTO, CommentOutputDTO } from '../../../api/comments/output-dto/comment.output-dto';
 import { GetCommentListByPostIdQuery } from './get-comment-list-by-post-id.query';
+import { CommentsQueryRepository } from '../../../infrastructure/comments/comments.query-repository';
+import { PostsQueryRepository } from '../../../infrastructure/posts/posts.query-repository';
+import { DomainException, DomainExceptionCode } from '../../../../../core/exceptions/domain/domain.exception';
 
 /*Обработчик запроса для поиска комментариев по ID поста.*/
 @QueryHandler(GetCommentListByPostIdQuery)

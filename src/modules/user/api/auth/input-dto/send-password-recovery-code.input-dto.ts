@@ -1,7 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { IsEmail, IsNotEmpty, IsString, Matches } from 'class-validator';
-import { Trim } from '../../../../../core/decorators/transformation/trim.transformation-decorator';
 import { USER_VALIDATION_CONSTRAINTS } from '../../../../../core/validation/constraints/user.validation-constraints';
+import { Trim } from '../../../../../core/decorators/transformation/trim.transformation-decorator';
 
 /*Валидационный Input DTO для отправки письма с кодом восстановления пароля пользователя.*/
 export class SendPasswordRecoveryCodeInputDTO {

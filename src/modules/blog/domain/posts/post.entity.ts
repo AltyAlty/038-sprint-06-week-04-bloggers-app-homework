@@ -10,14 +10,14 @@ import {
   PrimaryColumn,
 } from 'typeorm';
 import { v7 } from 'uuid';
-import { POST_VALIDATION_CONSTRAINTS } from '../../../../core/validation/constraints/post.validation-constraints';
 import { Blog } from '../blogs/blog.entity';
 import { Comment, type CommentList } from '../comments/comment.entity';
 import { CommentLikeData, type CommentLikeDataList } from '../comments/comment-like-data.entity';
+import { PostLikeData, type PostLikeDataList } from './post-like-data.entity';
+import { POST_VALIDATION_CONSTRAINTS } from '../../../../core/validation/constraints/post.validation-constraints';
 import { CreatePostDomainDTO } from './domain-dto/create-post.domain-dto';
 import { UpdatePostDomainDTO } from './domain-dto/update-post.domain-dto';
 import { UpdatePostLikesCountDomainDTO } from './domain-dto/update-post-likes-count.domain-dto';
-import { PostLikeData, type PostLikeDataList } from './post-like-data.entity';
 
 /*Класс для сущности поста.*/
 @Entity({ name: 'posts', schema: 'public' })

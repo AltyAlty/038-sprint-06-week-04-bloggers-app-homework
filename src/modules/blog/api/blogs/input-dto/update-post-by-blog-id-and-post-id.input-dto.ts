@@ -1,7 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { IsNotEmpty, IsString, Length } from 'class-validator';
-import { Trim } from '../../../../../core/decorators/transformation/trim.transformation-decorator';
 import { POST_VALIDATION_CONSTRAINTS } from '../../../../../core/validation/constraints/post.validation-constraints';
+import { Trim } from '../../../../../core/decorators/transformation/trim.transformation-decorator';
 
 /*Input DTO для изменения поста по ID блога и ID поста с валидацией при помощи библиотеки class-validator.*/
 export class UpdatePostByBlogIdAndPostIdInputDTO {

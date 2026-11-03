@@ -11,13 +11,13 @@ import {
   Unique,
 } from 'typeorm';
 import { v7 } from 'uuid';
-import { POST_VALIDATION_CONSTRAINTS } from '../../../../core/validation/constraints/post.validation-constraints';
 import { User } from '../../../user/domain/users/users.entity';
 import { Blog } from '../blogs/blog.entity';
+import { Post } from './post.entity';
+import { POST_VALIDATION_CONSTRAINTS } from '../../../../core/validation/constraints/post.validation-constraints';
 import { CreatePostLikeDataDomainDTO } from './domain-dto/create-post-like-data.domain-dto';
 import { PostLikeStatusDomainDTO } from './domain-dto/post-like-status.domain-dto';
 import { UpdatePostLikeDataDomainDTO } from './domain-dto/update-post-like-data.domain-dto';
-import { Post } from './post.entity';
 
 /*Класс для сущности данных о лайке поста.*/
 @Entity({ name: 'post_likes_data', schema: 'public' })

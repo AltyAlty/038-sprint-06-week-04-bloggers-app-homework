@@ -1,12 +1,12 @@
 import { Injectable } from '@nestjs/common';
 import { PassportStrategy } from '@nestjs/passport';
 import { ExtractJwt, Strategy } from 'passport-jwt';
-import { AuthService } from '../../../modules/user/application/auth/auth.service';
 import { AuthConfig } from '../../../modules/user/config/auth.config';
 import { User } from '../../../modules/user/domain/users/users.entity';
-import { DomainException, DomainExceptionCode } from '../../exceptions/domain/domain.exception';
 import { RefreshJwtPayloadDTO } from './dto/refresh-jwt-payload.dto';
 import { UserRefreshJwtAuthContextDTO } from './dto/user-refresh-jwt-auth-context.dto';
+import { AuthService } from '../../../modules/user/application/auth/auth.service';
+import { DomainException, DomainExceptionCode } from '../../exceptions/domain/domain.exception';
 
 /*Стратегия для авторизации по Refresh JWT, используя библиотеку Passport.js.*/
 @Injectable()

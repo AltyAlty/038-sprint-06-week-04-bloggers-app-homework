@@ -1,10 +1,10 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { PostsQueryRepository } from '../../../infrastructure/posts/posts.query-repository';
+import { Post, PostList } from '../../../domain/posts/post.entity';
+import { PostLikeData, PostLikeDataList } from '../../../domain/posts/post-like-data.entity';
 import { ExtendedLikesInfoOutputDTO } from './extended-likes-info.output-dto';
 import { NewestPostLikeListOutputDTO, NewestPostLikeOutputDTO } from './newest-post-like.output-dto';
 import { PostLikeStatusOutputDTO } from './post-like-status.output-dto';
-import { Post, PostList } from '../../../domain/posts/post.entity';
-import { PostLikeData, PostLikeDataList } from '../../../domain/posts/post-like-data.entity';
+import { PostsQueryRepository } from '../../../infrastructure/posts/posts.query-repository';
 
 /*Output DTO для поста.*/
 export class PostOutputDTO {

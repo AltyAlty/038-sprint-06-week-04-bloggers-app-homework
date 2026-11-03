@@ -1,12 +1,12 @@
 import { IQueryHandler, QueryHandler } from '@nestjs/cqrs';
-import { BlogsQueryRepository } from '../../../infrastructure/blogs/blogs.query-repository';
-import { PostsQueryRepository } from '../../../infrastructure/posts/posts.query-repository';
-import { PaginationMetaDataOutputDTO } from '../../../../../core/pagination/output-dto/pagination-meta-data.output-dto';
-import { PostListOutputDTO, PostOutputDTO } from '../../../api/posts/output-dto/post.output-dto';
-import { DomainException, DomainExceptionCode } from '../../../../../core/exceptions/domain/domain.exception';
 import { Blog } from '../../../domain/blogs/blog.entity';
 import { PostList } from '../../../domain/posts/post.entity';
+import { PaginationMetaDataOutputDTO } from '../../../../../core/pagination/output-dto/pagination-meta-data.output-dto';
+import { PostListOutputDTO, PostOutputDTO } from '../../../api/posts/output-dto/post.output-dto';
 import { GetPostListByBlogIdQuery } from './get-post-list-by-blog-id.query';
+import { BlogsQueryRepository } from '../../../infrastructure/blogs/blogs.query-repository';
+import { PostsQueryRepository } from '../../../infrastructure/posts/posts.query-repository';
+import { DomainException, DomainExceptionCode } from '../../../../../core/exceptions/domain/domain.exception';
 
 /*Обработчик запроса для поиска постов по ID блога.*/
 @QueryHandler(GetPostListByBlogIdQuery)

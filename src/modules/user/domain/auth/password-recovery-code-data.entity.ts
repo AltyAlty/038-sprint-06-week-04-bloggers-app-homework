@@ -1,7 +1,7 @@
 import { Column, Entity, JoinColumn, ManyToOne, PrimaryColumn } from 'typeorm';
 import { v7 } from 'uuid';
-import { USER_VALIDATION_CONSTRAINTS } from '../../../../core/validation/constraints/user.validation-constraints';
 import { User } from '../users/users.entity';
+import { USER_VALIDATION_CONSTRAINTS } from '../../../../core/validation/constraints/user.validation-constraints';
 import { CreatePasswordRecoveryCodeDataDomainDTO } from './domain-dto/create-password-recovery-code-data.domain-dto';
 import { UpdatePasswordRecoveryCodeDataDomainDTO } from './domain-dto/update-password-recovery-code-data.domain-dto';
 

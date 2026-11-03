@@ -1,15 +1,15 @@
 import { Injectable } from '@nestjs/common';
 import { Argon2Adapter } from '../../../../core/security/cryptography/argon2.adapter';
-import { AuthRepository } from '../../infrastructure/auth/auth.repository';
-import { SecurityDevicesRepository } from '../../infrastructure/security-devices/security-devices.repository';
-import { UsersRepository } from '../../infrastructure/users/users.repository';
-import { UserLocalAuthContextDTO } from '../../../../core/guards/local-auth/dto/user-local-auth-context.dto';
 import { Session } from '../../domain/auth/session.entity';
 import { SecurityDevice } from '../../domain/security-devices/security-device.entity';
 import { User } from '../../domain/users/users.entity';
+import { UserLocalAuthContextDTO } from '../../../../core/guards/local-auth/dto/user-local-auth-context.dto';
 import { ValidateAccessJwtPayloadDTO } from './dto/validate-access-jwt-payload.dto';
 import { ValidateRefreshJwtPayloadDTO } from './dto/validate-refresh-jwt-payload.dto';
 import { ValidateUserLocalAuthCredentialsDTO } from './dto/validate-user-local-auth-credentials.dto';
+import { AuthRepository } from '../../infrastructure/auth/auth.repository';
+import { SecurityDevicesRepository } from '../../infrastructure/security-devices/security-devices.repository';
+import { UsersRepository } from '../../infrastructure/users/users.repository';
 
 /*Сервис для работы с аутентификацией и авторизацией.*/
 @Injectable()

@@ -1,13 +1,13 @@
 import { CommandHandler, EventBus, ICommandHandler } from '@nestjs/cqrs';
 import { add } from 'date-fns';
 import { v7 } from 'uuid';
-import { AuthRepository } from '../../../infrastructure/auth/auth.repository';
-import { UsersRepository } from '../../../infrastructure/users/users.repository';
 import { AuthConfig } from '../../../config/auth.config';
 import { PasswordRecoveryCodeData } from '../../../domain/auth/password-recovery-code-data.entity';
 import { User } from '../../../domain/users/users.entity';
-import { PasswordRecoveryRequestedEvent } from '../events/password-recovery-requested.event';
 import { SendPasswordRecoveryCodeCommand } from './send-password-recovery-code.command';
+import { PasswordRecoveryRequestedEvent } from '../events/password-recovery-requested.event';
+import { AuthRepository } from '../../../infrastructure/auth/auth.repository';
+import { UsersRepository } from '../../../infrastructure/users/users.repository';
 
 /*Обработчик команды для отправки письма с кодом восстановления пароля пользователя.*/
 @CommandHandler(SendPasswordRecoveryCodeCommand)

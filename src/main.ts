@@ -1,9 +1,9 @@
 import { NestFactory } from '@nestjs/core';
 import { NestExpressApplication } from '@nestjs/platform-express';
 import cookieParser from 'cookie-parser';
-import { AppModule } from './app.module';
 import { CoreConfig } from './core/config/core.config';
 import { appSetup } from './setup/app.setup';
+import { AppModule } from './app.module';
 
 /*Функция для запуска приложения.*/
 async function bootstrap(): Promise<void> {

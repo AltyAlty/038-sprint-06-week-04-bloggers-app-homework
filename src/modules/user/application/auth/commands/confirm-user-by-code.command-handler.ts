@@ -1,10 +1,10 @@
 import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
-import { AuthRepository } from '../../../infrastructure/auth/auth.repository';
-import { UsersRepository } from '../../../infrastructure/users/users.repository';
-import { DomainException, DomainExceptionCode } from '../../../../../core/exceptions/domain/domain.exception';
 import { EmailConfirmation } from '../../../domain/auth/email-confirmation.entity';
 import { User } from '../../../domain/users/users.entity';
 import { ConfirmUserByCodeCommand } from './confirm-user-by-code.command';
+import { AuthRepository } from '../../../infrastructure/auth/auth.repository';
+import { UsersRepository } from '../../../infrastructure/users/users.repository';
+import { DomainException, DomainExceptionCode } from '../../../../../core/exceptions/domain/domain.exception';
 
 /*Обработчик команды для подтверждения регистрации пользователя по коду подтверждения регистрации пользователя.*/
 @CommandHandler(ConfirmUserByCodeCommand)

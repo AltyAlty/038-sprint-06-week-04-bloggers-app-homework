@@ -1,8 +1,8 @@
 import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
-import { CommentsRepository } from '../../../infrastructure/comments/comments.repository';
-import { DomainException, DomainExceptionCode } from '../../../../../core/exceptions/domain/domain.exception';
 import { Comment } from '../../../domain/comments/comment.entity';
 import { UpdateCommentByIdCommand } from './update-comment-by-id.command';
+import { CommentsRepository } from '../../../infrastructure/comments/comments.repository';
+import { DomainException, DomainExceptionCode } from '../../../../../core/exceptions/domain/domain.exception';
 
 /*Обработчик команды для изменения комментария по ID.*/
 @CommandHandler(UpdateCommentByIdCommand)

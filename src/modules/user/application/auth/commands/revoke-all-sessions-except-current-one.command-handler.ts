@@ -1,7 +1,7 @@
 import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
+import { RevokeAllSessionsExceptCurrentOneCommand } from './revoke-all-sessions-except-current-one.command';
 import { AuthRepository } from '../../../infrastructure/auth/auth.repository';
 import { SecurityDevicesRepository } from '../../../infrastructure/security-devices/security-devices.repository';
-import { RevokeAllSessionsExceptCurrentOneCommand } from './revoke-all-sessions-except-current-one.command';
 
 /*Обработчик команды для отзыва всех пользовательских сессий, кроме текущей.*/
 @CommandHandler(RevokeAllSessionsExceptCurrentOneCommand)

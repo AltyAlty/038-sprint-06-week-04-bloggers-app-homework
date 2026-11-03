@@ -1,8 +1,8 @@
 import { INestApplication } from '@nestjs/common';
 import { DocumentBuilder, OpenAPIObject, SwaggerModule } from '@nestjs/swagger';
-import { CoreConfig } from '../core/config/core.config';
 import { SETTINGS } from '../core/settings/settings';
-import { SwaggerSortEnums } from '../core/swagger/types/swagger-sort-enums';
+import { CoreConfig } from '../core/config/core.config';
+import { SwaggerSortEnums } from '../core/swagger/types/swagger-sort-enums.type';
 
 /*Интерфейс для типизации контроллеров в Swagger UI.*/
 interface SwaggerController {

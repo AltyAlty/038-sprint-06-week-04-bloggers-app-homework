@@ -1,6 +1,7 @@
 import { Body, Controller, Get, HttpCode, HttpStatus, Param, Post, Put, Query, UseGuards } from '@nestjs/common';
 import { CommandBus, QueryBus } from '@nestjs/cqrs';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
+import { SETTINGS } from '../../../../core/settings/settings';
 import { CreateCommentForPostInputDTO } from './input-dto/create-comment-for-post.input-dto';
 import { GetCommentListByPostIdQueryInputDTO } from './input-dto/query/get-comment-list-by-post-id-query.input-dto';
 import { GetPostListQueryInputDTO } from './input-dto/query/get-post-list-query.input-dto';
@@ -8,17 +9,16 @@ import { UpdatePostLikeStatusByIdInputDTO } from './input-dto/update-post-like-s
 import { PaginationMetaDataOutputDTO } from '../../../../core/pagination/output-dto/pagination-meta-data.output-dto';
 import { CommentListOutputDTO, CommentOutputDTO } from '../comments/output-dto/comment.output-dto';
 import { PostListOutputDTO, PostOutputDTO } from './output-dto/post.output-dto';
-import { AccessJwtAuthGuard } from '../../../../core/guards/access-jwt-auth/access-jwt-auth.guard';
 import { UserAccessJwtAuthContextDTO } from '../../../../core/guards/access-jwt-auth/dto/user-access-jwt-auth-context.dto';
-import { OptionalAccessJwtAuthGuard } from '../../../../core/guards/optional-access-jwt-auth/optional-access-jwt-auth.guard';
-import { SETTINGS } from '../../../../core/settings/settings';
-import { PostsControllerSwaggerDecorators } from '../../../../core/swagger/decorators/blog-module/posts-controller.swagger-decorators';
 import { ExtractUserDataFromRequest } from '../../../user/api/auth/decorators/param-extraction/extract-user-data-from-request.param-decorator';
+import { AccessJwtAuthGuard } from '../../../../core/guards/access-jwt-auth/access-jwt-auth.guard';
+import { OptionalAccessJwtAuthGuard } from '../../../../core/guards/optional-access-jwt-auth/optional-access-jwt-auth.guard';
 import { CreateCommentForPostCommand } from '../../application/comments/commands/create-comment-for-post.command';
-import { GetCommentListByPostIdQuery } from '../../application/comments/queries/get-comment-list-by-post-id.query';
 import { UpdatePostLikeStatusByIdCommand } from '../../application/posts/commands/update-post-like-status-by-id.command';
+import { GetCommentListByPostIdQuery } from '../../application/comments/queries/get-comment-list-by-post-id.query';
 import { GetPostByIdQuery } from '../../application/posts/queries/get-post-by-id.query';
 import { GetPostListQuery } from '../../application/posts/queries/get-post-list.query';
+import { PostsControllerSwaggerDecorators } from '../../../../core/swagger/decorators/blog-module/posts-controller.swagger-decorators';
 
 /*Контроллер для постов.*/
 @ApiTags(SETTINGS.POSTS_API_TAG)
