@@ -45,32 +45,32 @@ export class CommentsRepository {
     await this.commentsRepository.delete(id);
   }
 
-  /*Метод для soft удаления комментариев по ID поста в БД.*/
+  /*Метод для soft удаления всех комментариев по ID поста в БД.*/
   public async markAllAsDeletedByPostId(postId: string): Promise<void> {
     await this.commentsRepository.softDelete({ postId });
   }
 
-  /*Метод для hard удаления комментариев по ID поста в БД.*/
+  /*Метод для hard удаления всех комментариев по ID поста в БД.*/
   public async deleteAllByPostId(postId: string): Promise<void> {
     await this.commentsRepository.delete({ postId });
   }
 
-  /*Метод для soft удаления комментариев по ID блога в БД.*/
+  /*Метод для soft удаления всех комментариев по ID блога в БД.*/
   public async markAllAsDeletedByBlogId(blogId: string): Promise<void> {
     await this.commentsRepository.softDelete({ blogId });
   }
 
-  /*Метод для hard удаления комментариев по ID блога в БД.*/
+  /*Метод для hard удаления всех комментариев по ID блога в БД.*/
   public async deleteAllByBlogId(blogId: string): Promise<void> {
     await this.commentsRepository.delete({ blogId });
   }
 
-  /*Метод для soft удаления комментариев по ID пользователя в БД.*/
+  /*Метод для soft удаления всех комментариев по ID пользователя в БД.*/
   public async markAllAsDeletedByUserId(userId: string): Promise<void> {
     await this.commentsRepository.softDelete({ userId });
   }
 
-  /*Метод для hard удаления комментариев по ID пользователя в БД.*/
+  /*Метод для hard удаления всех комментариев по ID пользователя в БД.*/
   public async deleteAllByUserId(userId: string): Promise<void> {
     await this.commentsRepository.delete({ userId });
   }
@@ -85,42 +85,42 @@ export class CommentsRepository {
     await this.commentLikesDataRepository.delete({ commentId, userId });
   }
 
-  /*Метод для soft удаления данных о лайках комментария по ID комментария в БД.*/
+  /*Метод для soft удаления всех данных о лайках комментария по ID комментария в БД.*/
   public async markAllCommentLikeDataAsDeletedByCommentId(commentId: string): Promise<void> {
     await this.commentLikesDataRepository.softDelete({ commentId });
   }
 
-  /*Метод для hard удаления данных о лайках комментария по ID комментария в БД.*/
+  /*Метод для hard удаления всех данных о лайках комментария по ID комментария в БД.*/
   public async deleteAllCommentLikeDataByCommentId(commentId: string): Promise<void> {
     await this.commentLikesDataRepository.delete({ commentId });
   }
 
-  /*Метод для soft удаления данных о лайках комментариев по ID поста в БД.*/
+  /*Метод для soft удаления всех данных о лайках комментариев по ID поста в БД.*/
   public async markAllCommentLikeDataAsDeletedByPostId(postId: string): Promise<void> {
     await this.commentLikesDataRepository.softDelete({ postId });
   }
 
-  /*Метод для hard удаления данных о лайках комментариев по ID поста в БД.*/
+  /*Метод для hard удаления всех данных о лайках комментариев по ID поста в БД.*/
   public async deleteAllCommentLikeDataByPostId(postId: string): Promise<void> {
     await this.commentLikesDataRepository.delete({ postId });
   }
 
-  /*Метод для soft удаления данных о лайках комментария по ID блога в БД.*/
+  /*Метод для soft удаления всех данных о лайках комментария по ID блога в БД.*/
   public async markAllCommentLikeDataAsDeletedByBlogId(blogId: string): Promise<void> {
     await this.commentLikesDataRepository.softDelete({ blogId });
   }
 
-  /*Метод для hard удаления данных о лайках комментария по ID блога в БД.*/
+  /*Метод для hard удаления всех данных о лайках комментария по ID блога в БД.*/
   public async deleteAllCommentLikeDataByBlogId(blogId: string): Promise<void> {
     await this.commentLikesDataRepository.delete({ blogId });
   }
 
-  /*Метод для soft удаления данных о лайках комментария по ID пользователя в БД.*/
+  /*Метод для soft удаления всех данных о лайках комментария по ID пользователя в БД.*/
   public async markAllCommentLikeDataAsDeletedByUserId(userId: string): Promise<void> {
     await this.commentLikesDataRepository.softDelete({ userId });
   }
 
-  /*Метод для hard удаления данных о лайках комментария по ID пользователя в БД.*/
+  /*Метод для hard удаления всех данных о лайках комментария по ID пользователя в БД.*/
   public async deleteAllCommentLikeDataByUserId(userId: string): Promise<void> {
     await this.commentLikesDataRepository.delete({ userId });
   }

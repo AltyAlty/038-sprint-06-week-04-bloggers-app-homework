@@ -68,7 +68,7 @@ export class AuthRepository {
     await this.emailConfirmationsRepository.delete({ userId });
   }
 
-  /*Метод для hard удаления данных о всех кодах восстановления пароля пользователя по ID пользователя в БД.*/
+  /*Метод для hard удаления всех данных о кодах восстановления пароля пользователя по ID пользователя в БД.*/
   public async deleteAllRecoveryCodesDataByUserId(userId: string): Promise<void> {
     await this.passwordRecoveryCodesDataRepository.delete({ userId });
   }
@@ -90,5 +90,10 @@ export class AuthRepository {
     deviceId: string
   ): Promise<void> {
     await this.sessionsRepository.delete({ userId, deviceId: Not(deviceId) });
+  }
+
+  /*Метод для hard удаления всех пользовательских сессий по ID пользователя в БД.*/
+  public async deleteAllSessionsByUserId(userId: string): Promise<void> {
+    await this.sessionsRepository.delete({ userId });
   }
 }

@@ -42,12 +42,12 @@ export class PostsRepository {
     await this.postsRepository.delete(id);
   }
 
-  /*Метод для soft удаления постов по ID блога в БД.*/
+  /*Метод для soft удаления всех постов по ID блога в БД.*/
   public async markAllAsDeletedByBlogId(blogId: string): Promise<void> {
     await this.postsRepository.softDelete({ blogId });
   }
 
-  /*Метод для hard удаления постов по ID блога в БД.*/
+  /*Метод для hard удаления всех постов по ID блога в БД.*/
   public async deleteAllByBlogId(blogId: string): Promise<void> {
     await this.postsRepository.delete({ blogId });
   }
@@ -62,22 +62,22 @@ export class PostsRepository {
     await this.postLikesDataRepository.delete({ postId, userId });
   }
 
-  /*Метод для soft удаления данных о лайках поста по ID поста в БД.*/
+  /*Метод для soft удаления всех данных о лайках поста по ID поста в БД.*/
   public async markAllPostLikeDataAsDeletedByPostId(postId: string): Promise<void> {
     await this.postLikesDataRepository.softDelete({ postId });
   }
 
-  /*Метод для hard удаления данных о лайках поста по ID поста в БД.*/
+  /*Метод для hard удаления всех данных о лайках поста по ID поста в БД.*/
   public async deleteAllPostLikeDataByPostId(postId: string): Promise<void> {
     await this.postLikesDataRepository.delete({ postId });
   }
 
-  /*Метод для soft удаления данных о лайках постов по ID блога в БД.*/
+  /*Метод для soft удаления всех данных о лайках постов по ID блога в БД.*/
   public async markAllPostLikeDataAsDeletedByBlogId(blogId: string): Promise<void> {
     await this.postLikesDataRepository.softDelete({ blogId });
   }
 
-  /*Метод для hard удаления данных о лайках постов по ID блога в БД.*/
+  /*Метод для hard удаления всех данных о лайках постов по ID блога в БД.*/
   public async deleteAllPostLikeDataByBlogId(blogId: string): Promise<void> {
     await this.postLikesDataRepository.delete({ blogId });
   }

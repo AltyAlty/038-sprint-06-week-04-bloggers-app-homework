@@ -30,4 +30,9 @@ export class SecurityDevicesRepository {
   public async deleteAllExceptCurrentOneBySecurityDeviceIdAndUserId(id: string, userId: string): Promise<void> {
     await this.securityDevicesRepository.delete({ userId, deviceId: Not(id) });
   }
+
+  /*Метод для hard удаления всех пользовательских устройств по ID пользователя в БД.*/
+  public async deleteAllByUserId(id: string): Promise<void> {
+    await this.securityDevicesRepository.delete({ userId: id });
+  }
 }

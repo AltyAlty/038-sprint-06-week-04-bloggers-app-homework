@@ -2,6 +2,8 @@ import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
 import { User } from '../../../domain/users/users.entity';
 import { MarkUserAsDeletedByIdCommand } from './mark-user-as-deleted-by-id.command';
 import { CommentsRepository } from '../../../../blog/infrastructure/comments/comments.repository';
+import { AuthRepository } from '../../../infrastructure/auth/auth.repository';
+import { SecurityDevicesRepository } from '../../../infrastructure/security-devices/security-devices.repository';
 import { UsersRepository } from '../../../infrastructure/users/users.repository';
 import { DomainException, DomainExceptionCode } from '../../../../../core/exceptions/domain/domain.exception';
 
@@ -9,6 +11,8 @@ import { DomainException, DomainExceptionCode } from '../../../../../core/except
 @CommandHandler(MarkUserAsDeletedByIdCommand)
 export class MarkUserAsDeletedByIdCommandHandler implements ICommandHandler<MarkUserAsDeletedByIdCommand> {
   public constructor(
+    private readonly authRepository: AuthRepository,
+    private readonly securityDevicesRepository: SecurityDevicesRepository,
     private readonly usersRepository: UsersRepository,
     private readonly commentsRepository: CommentsRepository
   ) {}
@@ -25,11 +29,20 @@ export class MarkUserAsDeletedByIdCommandHandler implements ICommandHandler<Mark
         field: 'code',
       });
 
+    /*Просим репозиторий "CommentsRepository" soft удалить все данные о лайках комментариев по ID пользователя в БД.*/
+    await this.commentsRepository.markAllCommentLikeDataAsDeletedByUserId(id);
+    /*Просим репозиторий "CommentsRepository" soft удалить все комментарии по ID пользователя в БД.*/
+    await this.commentsRepository.markAllAsDeletedByUserId(id);
+    /*Просим репозиторий "AuthRepository" hard удалить все данные о подтверждении регистрации пользователя в БД.*/
+    await this.authRepository.deleteAllEmailConfirmationsByUserId(id);
+    /*Просим репозиторий "AuthRepository" hard удалить все данные о кодах восстановления пароля пользователя в БД.*/
+    await this.authRepository.deleteAllRecoveryCodesDataByUserId(id);
+    /*Просим репозиторий "securityDevicesRepository" hard удалить все пользовательские устройства по ID пользователя в
+    БД.*/
+    await this.securityDevicesRepository.deleteAllByUserId(id);
+    /*Просим репозиторий "AuthRepository" hard удалить все пользовательские сессии по ID пользователя в БД.*/
+    await this.authRepository.deleteAllSessionsByUserId(id);
     /*Если пользователь был найден, то просим репозиторий "UsersRepository" soft удалить пользователя по ID в БД.*/
     await this.usersRepository.markAsDeletedById(id);
-    /*Просим репозиторий "CommentsRepository" soft удалить данные о лайках комментариев по ID пользователя в БД.*/
-    await this.commentsRepository.markAllCommentLikeDataAsDeletedByUserId(id);
-    /*Просим репозиторий "CommentsRepository" soft удалить комментарии по ID пользователя в БД.*/
-    await this.commentsRepository.markAllAsDeletedByUserId(id);
   }
 }

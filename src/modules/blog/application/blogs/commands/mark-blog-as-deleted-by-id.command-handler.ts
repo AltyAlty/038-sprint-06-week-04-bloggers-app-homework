@@ -27,14 +27,14 @@ export class MarkBlogAsDeletedByIdCommandHandler implements ICommandHandler<Mark
         field: 'id',
       });
 
-    /*Если блог был найден, то просим репозиторий "CommentsRepository" soft удалить данные о лайках комментария по ID
-    блога в БД.*/
+    /*Если блог был найден, то просим репозиторий "CommentsRepository" soft удалить все данные о лайках комментария по
+    ID блога в БД.*/
     await this.commentsRepository.markAllCommentLikeDataAsDeletedByBlogId(id);
-    /*Просим репозиторий "CommentsRepository" soft удалить комментарии по ID блога в БД.*/
+    /*Просим репозиторий "CommentsRepository" soft удалить все комментарии по ID блога в БД.*/
     await this.commentsRepository.markAllAsDeletedByBlogId(id);
-    /*Просим репозиторий "PostsRepository" soft удалить данные о лайках постов по ID блога в БД.*/
+    /*Просим репозиторий "PostsRepository" soft удалить все данные о лайках постов по ID блога в БД.*/
     await this.postsRepository.markAllPostLikeDataAsDeletedByBlogId(id);
-    /*Просим репозиторий "PostsRepository" soft удалить посты по ID блога в БД.*/
+    /*Просим репозиторий "PostsRepository" soft удалить все посты по ID блога в БД.*/
     await this.postsRepository.markAllAsDeletedByBlogId(id);
     /*Просим репозиторий "BlogsRepository" soft удалить блог по ID в БД.*/
     await this.blogsRepository.markAsDeletedById(id);
