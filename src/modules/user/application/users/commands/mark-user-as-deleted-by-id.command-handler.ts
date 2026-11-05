@@ -36,7 +36,7 @@ export class MarkUserAsDeletedByIdCommandHandler implements ICommandHandler<Mark
     /*Просим репозиторий "AuthRepository" hard удалить все данные о подтверждении регистрации пользователя в БД.*/
     await this.authRepository.deleteAllEmailConfirmationsByUserId(id);
     /*Просим репозиторий "AuthRepository" hard удалить все данные о кодах восстановления пароля пользователя в БД.*/
-    await this.authRepository.deleteAllRecoveryCodesDataByUserId(id);
+    await this.authRepository.deleteAllPasswordRecoveryCodesDataByUserId(id);
     /*Просим репозиторий "securityDevicesRepository" hard удалить все пользовательские устройства по ID пользователя в
     БД.*/
     await this.securityDevicesRepository.deleteAllByUserId(id);

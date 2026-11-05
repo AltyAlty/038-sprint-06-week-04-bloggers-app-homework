@@ -42,6 +42,7 @@ import { SecurityDevicesRepository } from './infrastructure/security-devices/sec
 import { UsersRepository } from './infrastructure/users/users.repository';
 import { SecurityDevicesQueryRepository } from './infrastructure/security-devices/security-devices.query-repository';
 import { UsersQueryRepository } from './infrastructure/users/users.query-repository';
+import { ExpiredAuthDataCleanupScheduler } from './schedulers/expired-auth-data-cleanup.scheduler';
 
 /*Модуль для пользователей.*/
 @Module({
@@ -61,6 +62,7 @@ import { UsersQueryRepository } from './infrastructure/users/users.query-reposit
   ],
   controllers: [AuthController, SecurityDevicesController, UsersSaController],
   providers: [
+    ExpiredAuthDataCleanupScheduler,
     LocalAuthStrategy,
     AccessJwtAuthStrategy,
     RefreshJwtAuthStrategy,

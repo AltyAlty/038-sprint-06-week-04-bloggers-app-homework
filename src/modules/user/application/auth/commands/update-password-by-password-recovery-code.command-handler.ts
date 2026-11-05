@@ -20,7 +20,7 @@ export class UpdatePasswordByPasswordRecoveryCodeCommandHandler implements IComm
     /*Просим репозиторий "AuthRepository" найти данные о коде восстановления пароля пользователя по коду восстановления
      пароля пользователя в БД.*/
     const passwordRecoveryCodeData: PasswordRecoveryCodeData | null =
-      await this.authRepository.findRecoveryPasswordCodeDataByPasswordRecoveryCode(dto.recoveryCode);
+      await this.authRepository.findPasswordRecoveryCodeDataByPasswordRecoveryCode(dto.recoveryCode);
 
     /*Если данные о коде восстановления пароля пользователя не были найдены, то выбрасываем исключение с информацией об
     этом.*/
@@ -61,6 +61,6 @@ export class UpdatePasswordByPasswordRecoveryCodeCommandHandler implements IComm
     await this.usersRepository.save(user);
     /*Просим репозиторий "AuthRepository" hard удалить данные о всех кодах восстановления пароля пользователя ID
     пользователя в БД.*/
-    await this.authRepository.deleteAllRecoveryCodesDataByUserId(userId);
+    await this.authRepository.deleteAllPasswordRecoveryCodesDataByUserId(userId);
   }
 }

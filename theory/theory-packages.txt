@@ -173,9 +173,13 @@ ORM-библиотека TypeORM позволяет определять сущ�
 52. Библиотека-драйвер pg - это драйвер для Node.js, предоставляющий низкоуровневый API для подключения к серверам БД
 PostgreSQL и выполнения запросов к БД.
 
-53. Библиотека uuid - это библиотека для генерации UUID в Node.js и браузере.
+53. Библиотека uuid - это библиотека, позволяющая генерировать UUID в Node.js и браузере.
 
-54. Библиотека Zod - это библиотека для валидации данных в TypeScript в рантайме, а не только при компиляции.
+54. Библиотека Zod - это библиотека, способная валидировать данные согласно правилам TypeScript в рантайме, а не только
+при компиляции.
+
+55. Модуль backend‑фреймворка NestJS @nestjs/schedule - это официальный модуль, работающий на основе пакета cron и
+предоставляющий удобные декораторы для запуска задач по расписанию во время работы приложения.
 
 /*--------------------------------------------------------------------------------------------------------------------*/
 
@@ -326,5 +330,109 @@ export class RequestRateLimitingGuard extends ThrottlerGuard {
 
 @UseGuards(RequestRateLimitingGuard)
 @Throttle({ default: { limit: 2, ttl: 10000 } })
+
+/*--------------------------------------------------------------------------------------------------------------------*/
+
+При использовании библиотеки Zod нужно:
+
+1. Описать схему для проверяемого файла:
+
+import { z } from 'zod';
+
+const envSchema = z.object({
+  POSTGRESQL_DB_HOST: z.string(),
+  POSTGRESQL_DB_PORT: z.coerce.number(),
+  POSTGRESQL_DB_USERNAME: z.string(),
+  POSTGRESQL_DB_PASSWORD: z.string(),
+  DB_NAME: z.string(),
+});
+
+2. Сделать проверку данных из проверяемого файла:
+
+const env = envSchema.parse(process.env);
+
+
+3. Использовать полученный объект на основе проверенных данных из файла:
+
+export const AppDataSource = new DataSource({
+  type: 'postgres',
+  host: env.POSTGRESQL_DB_HOST,
+  port: env.POSTGRESQL_DB_PORT,
+  username: env.POSTGRESQL_DB_USERNAME,
+  password: env.POSTGRESQL_DB_PASSWORD,
+  database: env.DB_NAME,
+  /*Указываем путь ко всем сущностям в приложении, так как опция "autoLoadEntities" не работает вне NestJS.*/
+  entities: [__dirname + '/../../**/*.entity.ts'],
+  /*Указываем папку для миграций.*/
+  migrations: [__dirname + '/../*.ts'],
+  synchronize: false,
+});
+
+/*--------------------------------------------------------------------------------------------------------------------*/
+
+При использовании модуля @nestjs/schedule нужно:
+
+1. Зарегистрировать модуль @nestjs/schedule в массиве "imports" модуля "AppModule": "ScheduleModule.forRoot()".
+
+2. В слой репозиториев добавить методы, удаляющие данные из БД после какого-то срока, например:
+
+/*Метод для hard удаления всех просроченных данных о подтверждении регистрации пользователей, у которых дата истечения
+прошла раньше указанной даты.*/
+public async deleteAllExpiredEmailConfirmations(expiredBeforeDate: Date): Promise<void> {
+    await this.emailConfirmationsRepository.delete({ expirationDate: LessThan(expiredBeforeDate) });
+}
+
+/*Метод для hard удаления всех просроченных данных о кодах восстановления пароля пользователей, у которых дата
+истечения прошла раньше указанной даты.*/
+public async deleteAllExpiredPasswordRecoveryCodesData(expiredBeforeDate: Date): Promise<void> {
+    await this.passwordRecoveryCodesDataRepository.delete({ expirationDate: LessThan(expiredBeforeDate) });
+}
+
+/*Метод для hard удаления всех просроченных пользовательских сессий, у которых дата истечения прошла раньше указанной
+даты.*/
+public async deleteAllExpiredSessions(expiredBeforeDate: Date): Promise<void> {
+    await this.sessionsRepository.delete({ exp: LessThan(expiredBeforeDate) });
+}
+
+3. Создать класс для планировщика, который раз в час удаляет из БД записи, используя декоратор "@Cron()" из модуля
+@nestjs/schedule, например:
+
+import { Injectable, Logger } from '@nestjs/common';
+import { Cron, CronExpression } from '@nestjs/schedule';
+import { AuthRepository } from '../infrastructure/auth/auth.repository';
+
+/*Класс для планировщика на основе модуля @nestjs/schedule, который раз в час удаляет из БД записи, истекшие более суток
+назад:
+1. Данные о подтверждении регистрации пользователей.
+2. Данные о кодах восстановления пароля пользователей
+3. Пользовательские сессии.*/
+@Injectable()
+export class ExpiredAuthDataCleanupScheduler {
+  private readonly logger: Logger = new Logger(ExpiredAuthDataCleanupScheduler.name);
+  public constructor(private readonly authRepository: AuthRepository) {}
+
+  @Cron(CronExpression.EVERY_HOUR)
+  public async cleanup(): Promise<void> {
+    try {
+      /*Должны удалять данные, которые истекли сутки или более назад, то есть должны проверять условие:
+      expirationDate < Date.now() - 24 часа. Для этого создаем переменную, которая будет хранить правую часть условия,
+      где 24 часа представлены как 86 400 000 мс.*/
+      const expiredBeforeDate: Date = new Date(Date.now() - 24 * 60 * 60 * 1000);
+
+      /*Запускаем параллельное удаление просроченных данных.*/
+      await Promise.all([
+        this.authRepository.deleteAllExpiredEmailConfirmations(expiredBeforeDate),
+        this.authRepository.deleteAllExpiredPasswordRecoveryCodesData(expiredBeforeDate),
+        this.authRepository.deleteAllExpiredSessions(expiredBeforeDate),
+      ]);
+    } catch (error: unknown) {
+      this.logger.error('Error during deleting expired data', error);
+    }
+  }
+}
+
+4. Зарегистрировать класс планировщика в массиве "providers" модуля, где зарегистрированы сущности проверяемых на
+истечение данных, например в модуле "UserModule".
+
 
 /*--------------------------------------------------------------------------------------------------------------------*/

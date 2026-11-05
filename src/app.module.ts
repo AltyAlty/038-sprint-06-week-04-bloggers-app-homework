@@ -1,5 +1,6 @@
 import { Module } from '@nestjs/common';
 import { APP_FILTER } from '@nestjs/core';
+import { ScheduleModule } from '@nestjs/schedule';
 import { ThrottlerModule } from '@nestjs/throttler';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { CoreConfig, Environments } from './core/config/core.config';
@@ -16,6 +17,7 @@ import { DomainExceptionFilter } from './core/exception-filters/domain/domain.ex
 @Module({
   imports: [
     configModule,
+    ScheduleModule.forRoot(),
     TypeOrmModule.forRootAsync({
       imports: [CoreModule],
       inject: [CoreConfig],

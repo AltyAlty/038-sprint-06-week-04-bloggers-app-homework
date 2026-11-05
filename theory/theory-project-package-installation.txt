@@ -144,5 +144,6 @@
 42. Установка @nestjs/typeorm: pnpm add @nestjs/typeorm
 43. Установка uuid: pnpm add uuid
 44. Установка Zod: pnpm add zod
+45. Установка @nestjs/schedule: pnpm add @nestjs/schedule
 
 /*--------------------------------------------------------------------------------------------------------------------*/

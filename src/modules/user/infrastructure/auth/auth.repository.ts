@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Not, Repository } from 'typeorm';
+import { LessThan, Not, Repository } from 'typeorm';
 import { EmailConfirmation } from '../../domain/auth/email-confirmation.entity';
 import { PasswordRecoveryCodeData } from '../../domain/auth/password-recovery-code-data.entity';
 import { Session } from '../../domain/auth/session.entity';
@@ -42,12 +42,12 @@ export class AuthRepository {
   }
 
   /*Метод для поиска данных о коде восстановления пароля пользователя по ID пользователя в БД.*/
-  public async findRecoveryPasswordCodeDataByUserId(userId: string): Promise<PasswordRecoveryCodeData | null> {
+  public async findPasswordRecoveryCodeDataByUserId(userId: string): Promise<PasswordRecoveryCodeData | null> {
     return this.passwordRecoveryCodesDataRepository.findOneBy({ userId });
   }
 
   /*Метод для поиска данных о коде восстановления пароля пользователя по коду восстановления пароля пользователя в БД.*/
-  public async findRecoveryPasswordCodeDataByPasswordRecoveryCode(
+  public async findPasswordRecoveryCodeDataByPasswordRecoveryCode(
     passwordRecoveryCode: string
   ): Promise<PasswordRecoveryCodeData | null> {
     return this.passwordRecoveryCodesDataRepository.findOneBy({ passwordRecoveryCode });
@@ -69,7 +69,7 @@ export class AuthRepository {
   }
 
   /*Метод для hard удаления всех данных о кодах восстановления пароля пользователя по ID пользователя в БД.*/
-  public async deleteAllRecoveryCodesDataByUserId(userId: string): Promise<void> {
+  public async deleteAllPasswordRecoveryCodesDataByUserId(userId: string): Promise<void> {
     await this.passwordRecoveryCodesDataRepository.delete({ userId });
   }
 
@@ -95,5 +95,23 @@ export class AuthRepository {
   /*Метод для hard удаления всех пользовательских сессий по ID пользователя в БД.*/
   public async deleteAllSessionsByUserId(userId: string): Promise<void> {
     await this.sessionsRepository.delete({ userId });
+  }
+
+  /*Метод для hard удаления всех просроченных данных о подтверждении регистрации пользователей, у которых дата истечения
+  прошла раньше указанной даты.*/
+  public async deleteAllExpiredEmailConfirmations(expiredBeforeDate: Date): Promise<void> {
+    await this.emailConfirmationsRepository.delete({ expirationDate: LessThan(expiredBeforeDate) });
+  }
+
+  /*Метод для hard удаления всех просроченных данных о кодах восстановления пароля пользователей, у которых дата
+  истечения прошла раньше указанной даты.*/
+  public async deleteAllExpiredPasswordRecoveryCodesData(expiredBeforeDate: Date): Promise<void> {
+    await this.passwordRecoveryCodesDataRepository.delete({ expirationDate: LessThan(expiredBeforeDate) });
+  }
+
+  /*Метод для hard удаления всех просроченных пользовательских сессий, у которых дата истечения прошла раньше указанной
+  даты.*/
+  public async deleteAllExpiredSessions(expiredBeforeDate: Date): Promise<void> {
+    await this.sessionsRepository.delete({ exp: LessThan(expiredBeforeDate) });
   }
 }

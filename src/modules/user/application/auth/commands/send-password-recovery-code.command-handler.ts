@@ -37,7 +37,7 @@ export class SendPasswordRecoveryCodeCommandHandler implements ICommandHandler<S
     /*Просим репозиторий "AuthRepository" найти данные о коде восстановления пароля пользователя по ID пользователя в
     БД.*/
     let passwordRecoveryCodeData: PasswordRecoveryCodeData | null =
-      await this.authRepository.findRecoveryPasswordCodeDataByUserId(userId);
+      await this.authRepository.findPasswordRecoveryCodeDataByUserId(userId);
 
     /*Если данные о коде восстановления пароля пользователя были найдены, то изменяем их, иначе создаем их.*/
     if (passwordRecoveryCodeData) {
