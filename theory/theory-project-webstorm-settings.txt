@@ -20,3 +20,16 @@
 3. Run eslint --fix on save - ON.
 
 /*--------------------------------------------------------------------------------------------------------------------*/
+
+Настройка запуска тестов через Jest в WebStorm:
+1. Сверху слева три вертикальные точки -> Edit...
+2. Удалить все конфигурации для Jest.
+3. Перейти Edit configuration templates ...
+4. Configuration file -> указать путь к файлу "jest.config.ts".
+5. Node options -> указать "--experimental-vm-modules --disable-warning=ExperimentalWarning"
+6. Jest package -> указать путь к пакету Jest.
+7. Working directory -> указать путь к папке проекта.
+8. Jest options -> указать "--runInBand".
+9. Environment variables -> указать "NODE_ENV=test".
+
+/*--------------------------------------------------------------------------------------------------------------------*/

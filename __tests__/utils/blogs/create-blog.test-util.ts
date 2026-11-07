@@ -1,0 +1,34 @@
+import { HttpStatus } from '@nestjs/common';
+import { NestExpressApplication } from '@nestjs/platform-express';
+import request from 'supertest';
+import { Response } from 'supertest';
+import { SETTINGS } from '../../../src/core/settings/settings';
+import { CreateBlogInputDTO } from '../../../src/modules/blog/api/blogs/input-dto/create-blog.input-dto';
+import { BlogOutputDTO } from '../../../src/modules/blog/api/blogs/output-dto/blog.output-dto';
+import { createBasicAuthToken } from '../auth/create-basic-auth-token.test-util';
+import { getCreateBlogInputDTO } from './input-dto-utils/get-create-blog-input-dto.test-util';
+
+export const createBlog = async (
+  app: NestExpressApplication,
+  blogDTO?: Partial<CreateBlogInputDTO>,
+  expectedStatus?: HttpStatus,
+  noBasicAuthToken?: boolean,
+  basicAuthToken?: any
+): Promise<BlogOutputDTO> => {
+  const testCreateBlogData: CreateBlogInputDTO = { ...getCreateBlogInputDTO(), ...blogDTO };
+  const testStatus: HttpStatus = expectedStatus ?? HttpStatus.CREATED;
+  const url: string = `/${SETTINGS.GLOBAL_PREFIX}/${SETTINGS.BLOGS_SA_REFIX}/${SETTINGS.BLOGS_SA_CREATE_BLOG_PATH}`;
+  let createBlogResponse: Response;
+
+  if (noBasicAuthToken) {
+    createBlogResponse = await request(app.getHttpServer()).post(url).send(testCreateBlogData).expect(testStatus);
+  } else {
+    createBlogResponse = await request(app.getHttpServer())
+      .post(url)
+      .set('Authorization', basicAuthToken ?? createBasicAuthToken(app))
+      .send(testCreateBlogData)
+      .expect(testStatus);
+  }
+
+  return createBlogResponse.body as BlogOutputDTO;
+};

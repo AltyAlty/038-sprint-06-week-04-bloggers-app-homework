@@ -145,5 +145,8 @@
 43. Установка uuid: pnpm add uuid
 44. Установка Zod: pnpm add zod
 45. Установка @nestjs/schedule: pnpm add @nestjs/schedule
+46. Установка @nestjs/testing: pnpm add -D @nestjs/testing
+47. Установка Supertest: pnpm add -D supertest
+48. Установка типов для Supertest: pnpm add -D @types/supertest
 
 /*--------------------------------------------------------------------------------------------------------------------*/

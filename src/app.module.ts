@@ -36,8 +36,6 @@ import { DomainExceptionFilter } from './core/exception-filters/domain/domain.ex
         synchronize: false,
         /*Включаем логирование SQL-запросов.*/
         logging: false,
-        /*Указываем папку для миграций.*/
-        migrations: [__dirname + 'migrations/*.ts'],
       }),
     }),
     ThrottlerModule.forRootAsync({
