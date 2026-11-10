@@ -9,8 +9,9 @@ export const getBlogById = async (
   blogId: any,
   expectedStatus?: HttpStatus
 ): Promise<BlogOutputDTO> => {
-  const testStatus: HttpStatus = expectedStatus ?? HttpStatus.OK;
-  const url: string = `/${SETTINGS.GLOBAL_PREFIX}/${SETTINGS.BLOGS_PREFIX}/${blogId}`;
-  const getBlogByIdResponse: Response = await request(app.getHttpServer()).get(url).expect(testStatus);
-  return getBlogByIdResponse.body as BlogOutputDTO;
+  const response: Response = await request(app.getHttpServer())
+    .get(`/${SETTINGS.GLOBAL_PREFIX}/${SETTINGS.BLOGS_PREFIX}/${blogId}`)
+    .expect(expectedStatus ?? HttpStatus.OK);
+
+  return response.body as BlogOutputDTO;
 };

@@ -28,7 +28,7 @@ export const SETTINGS = {
   USERS_SA_DELETE_USER_BY_ID_PATH: ':id',
 
   BLOGS_SA_API_TAG: 'Blogs SA',
-  BLOGS_SA_REFIX: 'sa/blogs',
+  BLOGS_SA_PREFIX: 'sa/blogs',
   BLOGS_SA_CREATE_BLOG_PATH: '',
   BLOGS_SA_CREATE_POST_FOR_BLOG_PATH: ':id/posts',
   BLOGS_SA_GET_BLOG_LIST_PATH: '',

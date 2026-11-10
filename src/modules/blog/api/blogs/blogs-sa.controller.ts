@@ -40,7 +40,7 @@ import { BlogsSaControllerSwaggerDecorators } from '../../../../core/swagger/dec
 @ApiTags(SETTINGS.BLOGS_SA_API_TAG)
 @ApiBasicAuth()
 @UseGuards(BasicAuthGuard)
-@Controller(SETTINGS.BLOGS_SA_REFIX)
+@Controller(SETTINGS.BLOGS_SA_PREFIX)
 export class BlogsSaController {
   public constructor(
     private readonly commandBus: CommandBus,
@@ -49,7 +49,6 @@ export class BlogsSaController {
 
   /*001. POST-запрос по созданию блога.*/
   @BlogsSaControllerSwaggerDecorators.createBlog
-  @UseGuards(BasicAuthGuard)
   @Post(SETTINGS.BLOGS_SA_CREATE_BLOG_PATH)
   @HttpCode(HttpStatus.CREATED)
   public async createBlog(@Body() body: CreateBlogInputDTO): Promise<BlogOutputDTO> {
@@ -59,7 +58,6 @@ export class BlogsSaController {
 
   /*002. POST-запрос по созданию поста в блоге.*/
   @BlogsSaControllerSwaggerDecorators.createPostForBlog
-  @UseGuards(BasicAuthGuard)
   @Post(SETTINGS.BLOGS_SA_CREATE_POST_FOR_BLOG_PATH)
   @HttpCode(HttpStatus.CREATED)
   public async createPostForBlog(
@@ -72,7 +70,6 @@ export class BlogsSaController {
 
   /*003. GET-запрос по поиску блогов с пагинацией, используя query-параметры.*/
   @BlogsSaControllerSwaggerDecorators.getBlogList
-  @UseGuards(BasicAuthGuard)
   @Get(SETTINGS.BLOGS_SA_GET_BLOG_LIST_PATH)
   @HttpCode(HttpStatus.OK)
   public async getBlogList(
@@ -84,7 +81,6 @@ export class BlogsSaController {
 
   /*004. GET-запрос по поиску постов с пагинацией по ID блога, используя query-параметры.*/
   @BlogsSaControllerSwaggerDecorators.getPostListByBlogId
-  @UseGuards(BasicAuthGuard)
   @Get(SETTINGS.BLOGS_SA_GET_POST_LIST_BY_BLOG_ID_PATH)
   @HttpCode(HttpStatus.OK)
   public async getPostListByBlogId(
@@ -98,7 +94,6 @@ export class BlogsSaController {
 
   /*005. PUT-запрос по изменению блога по ID, используя URI-параметры.*/
   @BlogsSaControllerSwaggerDecorators.updateBlogById
-  @UseGuards(BasicAuthGuard)
   @Put(SETTINGS.BLOGS_SA_UPDATE_BLOG_BY_ID_PATH)
   @HttpCode(HttpStatus.NO_CONTENT)
   public async updateBlogById(@Param('id') id: string, @Body() body: UpdateBlogByIdInputDTO): Promise<void> {
@@ -108,7 +103,6 @@ export class BlogsSaController {
 
   /*006. PUT-запрос по изменению поста по ID блога и ID поста, используя URI-параметры.*/
   @BlogsSaControllerSwaggerDecorators.updatePostByBlogIdAndPostId
-  @UseGuards(BasicAuthGuard)
   @Put(SETTINGS.BLOGS_SA_UPDATE_POST_BY_BLOG_ID_AND_POST_ID_PATH)
   @HttpCode(HttpStatus.NO_CONTENT)
   public async updatePostByBlogIdAndPostId(
@@ -122,7 +116,6 @@ export class BlogsSaController {
 
   /*007. DELETE-запрос по удалению блога по ID, используя URI-параметры.*/
   @BlogsSaControllerSwaggerDecorators.deleteBlogById
-  @UseGuards(BasicAuthGuard)
   @Delete(SETTINGS.BLOGS_SA_DELETE_BLOG_BY_ID_PATH)
   @HttpCode(HttpStatus.NO_CONTENT)
   public async deleteBlogById(@Param('id') id: string): Promise<void> {
@@ -132,7 +125,6 @@ export class BlogsSaController {
 
   /*008. DELETE-запрос по удалению поста по ID блога и ID поста, используя URI-параметры.*/
   @BlogsSaControllerSwaggerDecorators.deletePostByBlogIdAndPostId
-  @UseGuards(BasicAuthGuard)
   @Delete(SETTINGS.BLOGS_SA_DELETE_POST_BY_BLOG_ID_AND_POST_ID_PATH)
   @HttpCode(HttpStatus.NO_CONTENT)
   public async deletePostByBlogIdAndPostId(

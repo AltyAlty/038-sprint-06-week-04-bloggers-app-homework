@@ -18,9 +18,7 @@ export class UpdatePostByBlogIdAndPostIdInputDTO {
   @Length(
     POST_VALIDATION_CONSTRAINTS.SHORT_DESCRIPTION.MIN_LENGTH,
     POST_VALIDATION_CONSTRAINTS.SHORT_DESCRIPTION.MAX_LENGTH,
-    {
-      message: 'Field "$property" must be between $constraint1 and $constraint2 characters',
-    }
+    { message: 'Field "$property" must be between $constraint1 and $constraint2 characters' }
   )
   @IsNotEmpty({ message: 'Field "$property" must not be empty' })
   @IsString({ message: 'Field "$property" must be a string' })

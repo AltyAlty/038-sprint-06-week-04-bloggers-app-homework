@@ -25,9 +25,7 @@ export class UpdateBlogByIdInputDTO {
 
   @ApiProperty({ example: 'https://updated-blog-example.xyz/', description: 'New blog website' })
   @IsUrl({}, { message: 'Field "$property" is invalid' })
-  @Matches(BLOG_VALIDATION_CONSTRAINTS.WEBSITE_URL.MATCHES, {
-    message: 'Field "$property" is invalid',
-  })
+  @Matches(BLOG_VALIDATION_CONSTRAINTS.WEBSITE_URL.MATCHES, { message: 'Field "$property" is invalid' })
   @Length(BLOG_VALIDATION_CONSTRAINTS.WEBSITE_URL.MIN_LENGTH, BLOG_VALIDATION_CONSTRAINTS.WEBSITE_URL.MAX_LENGTH, {
     message: 'Field "$property" must be between $constraint1 and $constraint2 characters',
   })
