@@ -4,6 +4,8 @@ import { PassportModule } from '@nestjs/passport';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Comment } from '../blog/domain/comments/comment.entity';
 import { CommentLikeData } from '../blog/domain/comments/comment-like-data.entity';
+import { Post } from '../blog/domain/posts/post.entity';
+import { PostLikeData } from '../blog/domain/posts/post-like-data.entity';
 import { EmailConfirmation } from './domain/auth/email-confirmation.entity';
 import { PasswordRecoveryCodeData } from './domain/auth/password-recovery-code-data.entity';
 import { Session } from './domain/auth/session.entity';
@@ -37,6 +39,7 @@ import { SendCompleteRegistrationEmailEventHandler } from './application/auth/ev
 import { SendPasswordRecoveryCodeEmailEventHandler } from './application/auth/events/send-password-recovery-code-email.event-handler';
 import { AuthService } from './application/auth/auth.service';
 import { CommentsRepository } from '../blog/infrastructure/comments/comments.repository';
+import { PostsRepository } from '../blog/infrastructure/posts/posts.repository';
 import { AuthRepository } from './infrastructure/auth/auth.repository';
 import { SecurityDevicesRepository } from './infrastructure/security-devices/security-devices.repository';
 import { UsersRepository } from './infrastructure/users/users.repository';
@@ -53,6 +56,8 @@ import { ExpiredAuthDataCleanupScheduler } from './schedulers/expired-auth-data-
     TypeOrmModule.forFeature([
       Comment,
       CommentLikeData,
+      Post,
+      PostLikeData,
       User,
       EmailConfirmation,
       PasswordRecoveryCodeData,
@@ -89,6 +94,7 @@ import { ExpiredAuthDataCleanupScheduler } from './schedulers/expired-auth-data-
     AuthRepository,
     SecurityDevicesRepository,
     UsersRepository,
+    PostsRepository,
     CommentsRepository,
     SecurityDevicesQueryRepository,
     UsersQueryRepository,

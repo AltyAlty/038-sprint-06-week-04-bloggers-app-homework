@@ -9,9 +9,9 @@ export class SendPasswordRecoveryCodeEmailEventHandler implements IEventHandler<
 
   async handle(event: PasswordRecoveryRequestedEvent): Promise<void> {
     try {
-      await this.emailManager.sendCompleteRegistrationEmail(event.email, event.passwordRecoveryCode);
+      await this.emailManager.sendPasswordRecoveryEmail(event.email, event.passwordRecoveryCode);
     } catch (error) {
-      console.error('Failed to send a recovery password email: ', error);
+      console.error('Failed to send a password recovery email: ', error);
     }
   }
 }

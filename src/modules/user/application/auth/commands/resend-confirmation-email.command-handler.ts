@@ -55,17 +55,16 @@ export class ResendConfirmationEmailCommandHandler implements ICommandHandler<Re
     БД.*/
     let emailConfirmation: EmailConfirmation | null = await this.authRepository.findEmailConfirmationByUserId(userId);
 
-    /*Если данные о подтверждении регистрации пользователя были найдены, то просим репозиторий "AuthRepository" изменить
-    их по ID пользователя в БД.*/
+    /*Если данные о подтверждении регистрации пользователя были найдены, то изменяем их, иначе просим сущность
+    "EmailConfirmation" создать их.*/
     if (emailConfirmation) {
       emailConfirmation.update({ confirmationCode, expirationDate });
     } else {
-      /*Если данные о подтверждении регистрации пользователя не были найдены, то создаем такие данные и просим
-      репозиторий "AuthRepository" сохранить их в БД.*/
       emailConfirmation = EmailConfirmation.create({ userId, confirmationCode, expirationDate });
-      await this.authRepository.saveEmailConfirmation(emailConfirmation);
     }
 
+    /*Просим репозиторий "AuthRepository" сохранить данные о подтверждении регистрации пользователя в БД.*/
+    await this.authRepository.saveEmailConfirmation(emailConfirmation);
     /*Просим шину "EventBus" повторно отправить письмо о подтверждении регистрации пользователя.*/
     this.eventBus.publish(new ResendingConfirmationEmailRequestedEvent(dto.email, confirmationCode));
   }

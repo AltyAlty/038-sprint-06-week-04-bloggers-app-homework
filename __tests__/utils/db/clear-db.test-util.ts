@@ -20,5 +20,8 @@ export const clearDb = async (app: NestExpressApplication): Promise<void> => {
       CASCADE;
     `);
 
+  /*Сбрасываем историю вызовов у всех моков и шпионов.*/
   jest.clearAllMocks();
+  /*Возвращаем оригинальные методы, подмененные через метод "jest.spyOn()".*/
+  jest.restoreAllMocks();
 };

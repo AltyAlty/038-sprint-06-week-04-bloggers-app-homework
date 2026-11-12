@@ -64,7 +64,7 @@ export class CommentsQueryRepository {
   }
 
   /*Метод для поиска данных о лайках комментариев по ID комментариев и ID пользователя в БД.*/
-  public async findAllCommentLikesDataByCommentIdsAndUserId(
+  public async findAllCommentsLikesDataByCommentIdsAndUserId(
     commentIds: string[],
     userId: string
   ): Promise<CommentLikeDataList> {

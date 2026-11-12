@@ -31,7 +31,7 @@ export class MarkCommentAsDeletedByIdCommandHandler implements ICommandHandler<M
 
     /*Если комментарий был найден и пользователь является его владельцем, то просим репозиторий "CommentsRepository"
     soft удалить все данные о лайках комментария по ID комментария в БД.*/
-    await this.commentsRepository.markAllCommentLikeDataAsDeletedByCommentId(id);
+    await this.commentsRepository.markAllCommentLikesDataAsDeletedByCommentId(id);
     /*Просим репозиторий "CommentsRepository" soft удалить комментарий по ID в БД.*/
     await this.commentsRepository.markAsDeletedById(id);
   }

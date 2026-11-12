@@ -63,7 +63,7 @@ export class CommentOutputDTO {
       /*Просим query-репозиторий "CommentsQueryRepository" найти данные о лайках комментариев по ID комментариев и ID
       пользователя в БД.*/
       const commentLikesData: CommentLikeDataList =
-        await commentsQueryRepository.findAllCommentLikesDataByCommentIdsAndUserId(commentIds, userId);
+        await commentsQueryRepository.findAllCommentsLikesDataByCommentIdsAndUserId(commentIds, userId);
 
       /*Заполняем Map статусами лайков пользователя каждого комментария, не обращаясь в БД.*/
       commentLikesDataMap = new Map(

@@ -2,7 +2,9 @@ import { NestExpressApplication } from '@nestjs/platform-express';
 import { Test, TestingModule } from '@nestjs/testing';
 import cookieParser from 'cookie-parser';
 import { appSetup } from '../../../src/setup/app.setup';
+import { EmailManager } from '../../../src/core/modules/notification/email-manager/email.manager';
 import { AppModule } from '../../../src/app.module';
+import { emailManagerMock } from '../../test-doubles/mocks.test-util';
 import { clearDb } from '../db/clear-db.test-util';
 
 /*Функция для предварительных действий перед запуском тестового набора.*/
@@ -12,8 +14,12 @@ export const doBeforeTests = (): { readonly app: NestExpressApplication } => {
 
   /*Указываем, что будет происходить перед запуском каждого тестового набора.*/
   beforeAll(async (): Promise<void> => {
-    /*Создаем изолированный NestJS DI-контейнер на основе модуля "AppModule".*/
-    const testingModule: TestingModule = await Test.createTestingModule({ imports: [AppModule] }).compile();
+    /*Создаем изолированный NestJS DI-контейнер на основе модуля "AppModule" и добавляем моки.*/
+    const testingModule: TestingModule = await Test.createTestingModule({ imports: [AppModule] })
+      .overrideProvider(EmailManager)
+      .useValue(emailManagerMock)
+      .compile();
+
     /*Создаем экземпляр приложения NestJS.*/
     app = testingModule.createNestApplication<NestExpressApplication>();
     /*Подключаем middleware для работы с cookies.*/

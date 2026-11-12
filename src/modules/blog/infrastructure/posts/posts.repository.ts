@@ -63,22 +63,32 @@ export class PostsRepository {
   }
 
   /*Метод для soft удаления всех данных о лайках поста по ID поста в БД.*/
-  public async markAllPostLikeDataAsDeletedByPostId(postId: string): Promise<void> {
+  public async markAllPostLikesDataAsDeletedByPostId(postId: string): Promise<void> {
     await this.postLikesDataRepository.softDelete({ postId });
   }
 
   /*Метод для hard удаления всех данных о лайках поста по ID поста в БД.*/
-  public async deleteAllPostLikeDataByPostId(postId: string): Promise<void> {
+  public async deleteAllPostLikesDataByPostId(postId: string): Promise<void> {
     await this.postLikesDataRepository.delete({ postId });
   }
 
   /*Метод для soft удаления всех данных о лайках постов по ID блога в БД.*/
-  public async markAllPostLikeDataAsDeletedByBlogId(blogId: string): Promise<void> {
+  public async markAllPostsLikesDataAsDeletedByBlogId(blogId: string): Promise<void> {
     await this.postLikesDataRepository.softDelete({ blogId });
   }
 
   /*Метод для hard удаления всех данных о лайках постов по ID блога в БД.*/
-  public async deleteAllPostLikeDataByBlogId(blogId: string): Promise<void> {
+  public async deleteAllPostsLikesDataByBlogId(blogId: string): Promise<void> {
     await this.postLikesDataRepository.delete({ blogId });
+  }
+
+  /*Метод для soft удаления всех данных о лайках постов по ID пользователя в БД.*/
+  public async markAllPostsLikesDataAsDeletedByUserId(userId: string): Promise<void> {
+    await this.postLikesDataRepository.softDelete({ userId });
+  }
+
+  /*Метод для hard удаления всех данных о лайках постов по ID пользователя в БД.*/
+  public async deleteAllPostsLikesDataByUserId(userId: string): Promise<void> {
+    await this.postLikesDataRepository.delete({ userId });
   }
 }

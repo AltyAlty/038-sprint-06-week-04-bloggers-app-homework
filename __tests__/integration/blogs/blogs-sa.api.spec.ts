@@ -1,27 +1,39 @@
 import { HttpStatus } from '@nestjs/common';
 import { NestExpressApplication } from '@nestjs/platform-express';
-import { DataSource } from 'typeorm';
 import { SETTINGS } from '../../../src/core/settings/settings';
 import { UpdateBlogByIdInputDTO } from '../../../src/modules/blog/api/blogs/input-dto/update-blog-by-id.input-dto';
 import { UpdatePostByBlogIdAndPostIdInputDTO } from '../../../src/modules/blog/api/blogs/input-dto/update-post-by-blog-id-and-post-id.input-dto';
+import { CommentLikeStatusInputDTO } from '../../../src/modules/blog/api/comments/input-dto/update-comment-like-status-by-id.input-dto';
+import { PostLikeStatusInputDTO } from '../../../src/modules/blog/api/posts/input-dto/update-post-like-status-by-id.input-dto';
+import { CreateUserInputDTO } from '../../../src/modules/user/api/users/input-dto/create-user.input-dto';
 import { PaginationMetaDataOutputDTO } from '../../../src/core/pagination/output-dto/pagination-meta-data.output-dto';
 import { BlogListOutputDTO, BlogOutputDTO } from '../../../src/modules/blog/api/blogs/output-dto/blog.output-dto';
+import { CommentOutputDTO } from '../../../src/modules/blog/api/comments/output-dto/comment.output-dto';
 import { PostListOutputDTO, PostOutputDTO } from '../../../src/modules/blog/api/posts/output-dto/post.output-dto';
 import { validBlogNames, validBlogsPaginationSettings } from '../../test-data/blogs.test-data';
 import { validPostsPaginationSettings, validPostTitles } from '../../test-data/posts.test-data';
+import { authUserByLoginOrEmail } from '../../utils/auth/auth-user-by-login-or-email.test-util';
 import { createBlogSA } from '../../utils/blogs/create-blog-sa.test-util';
 import { deleteBlogByIdSA } from '../../utils/blogs/delete-blog-by-id-sa.test-util';
 import { getBlogById } from '../../utils/blogs/get-blog-by-id.test-util';
 import { getBlogListSA } from '../../utils/blogs/get-blog-list-sa.test-util';
 import { getUpdateBlogByIdInputDTO } from '../../utils/blogs/input-dto-utils/get-update-blog-by-id-input-dto.test-util';
 import { updateBlogByIdSA } from '../../utils/blogs/update-blog-by-id-sa.test-util';
+import { createCommentForPost } from '../../utils/comments/create-comment-for-post.test-util';
+import { getCommentById } from '../../utils/comments/get-comment-by-id.test-util';
+import { hasAnyCommentLikeDataByCommentId } from '../../utils/comments/has-any-comment-like-data-by-comment-id.test-util';
+import { updateCommentLikeStatusById } from '../../utils/comments/update-comment-like-status-by-id.test-util';
 import { doBeforeTests } from '../../utils/common/do-before-tests.test-util';
 import { createPostForBlogSA } from '../../utils/post/create-post-for-blog-sa.test-util';
 import { deletePostByBlogByAndPostIdSA } from '../../utils/post/delete-post-by-blog-by-and-post-id-sa.test-util';
 import { getPostById } from '../../utils/post/get-post-by-id.test-util';
 import { getPostListByBlogIdSA } from '../../utils/post/get-post-list-by-blog-id-sa.test-util';
+import { hasPostLikesDataByPostId } from '../../utils/post/has-post-likes-data-by-post-id.test-util';
 import { getUpdatePostByBlogIdAndPostIdInputDTO } from '../../utils/post/input-dto-utils/get-update-post-by-blog-id-and-post-id-input-dto.test-util';
 import { updatePostByBlogIdAndPostIdSA } from '../../utils/post/update-post-by-blog-id-and-post-id-sa.test-util';
+import { updatePostLikeStatusById } from '../../utils/post/update-post-like-status-by-id.test-util';
+import { createConfirmedUserSA } from '../../utils/users/create-confirmed-user-sa.test-util';
+import { getCreateUserInputDTO } from '../../utils/users/input-dto-utils/get-create-user-input-dto.test-util';
 
 describe('Blogs SA API', (): void => {
   const testApp: { readonly app: NestExpressApplication } = doBeforeTests();
@@ -48,8 +60,6 @@ describe('Blogs SA API', (): void => {
   });
 
   it('✅ 004 should return a list of blogs when valid pagination settings and a valid basic auth token passed; BlogsSaController 003. GET', async (): Promise<void> => {
-    const url: string = `/${SETTINGS.GLOBAL_PREFIX}/${SETTINGS.BLOGS_SA_PREFIX}/${SETTINGS.BLOGS_SA_GET_BLOG_LIST_PATH}?pageSize=${validBlogsPaginationSettings.pageSize}&pageNumber=${validBlogsPaginationSettings.pageNumber}&searchNameTerm=${validBlogsPaginationSettings.searchNameTerm}&sortDirection=${validBlogsPaginationSettings.sortDirection}&sortBy=${validBlogsPaginationSettings.sortBy}`;
-
     await Promise.all([
       createBlogSA(testApp.app, { name: validBlogNames.name_01 }),
       createBlogSA(testApp.app, { name: validBlogNames.name_02 }),
@@ -61,6 +71,7 @@ describe('Blogs SA API', (): void => {
       createBlogSA(testApp.app),
     ]);
 
+    const url: string = `/${SETTINGS.GLOBAL_PREFIX}/${SETTINGS.BLOGS_SA_PREFIX}/${SETTINGS.BLOGS_SA_GET_BLOG_LIST_PATH}?pageSize=${validBlogsPaginationSettings.pageSize}&pageNumber=${validBlogsPaginationSettings.pageNumber}&searchNameTerm=${validBlogsPaginationSettings.searchNameTerm}&sortDirection=${validBlogsPaginationSettings.sortDirection}&sortBy=${validBlogsPaginationSettings.sortBy}`;
     const getBlogListResponse: PaginationMetaDataOutputDTO<BlogListOutputDTO> = await getBlogListSA(testApp.app, url);
     expect(getBlogListResponse.items).toBeInstanceOf(Array);
     expect(getBlogListResponse.items.length).toBe(5);
@@ -94,7 +105,6 @@ describe('Blogs SA API', (): void => {
   it('✅ 006 should return a list of posts for a blog by a correct blog ID when valid pagination settings and a valid basic auth token passed; BlogsSaController 004. GET', async (): Promise<void> => {
     const createdBlog: BlogOutputDTO = await createBlogSA(testApp.app);
     const createdBlogId: string = createdBlog.id;
-    const url: string = `/${SETTINGS.GLOBAL_PREFIX}/${SETTINGS.BLOGS_SA_PREFIX}/${createdBlogId}/posts?pageSize=${validPostsPaginationSettings.pageSize}&pageNumber=${validPostsPaginationSettings.pageNumber}&sortDirection=${validPostsPaginationSettings.sortDirection}&sortBy=${validPostsPaginationSettings.sortBy}`;
 
     await Promise.all([
       createPostForBlogSA(testApp.app, createdBlogId, { title: validPostTitles.title_01 }),
@@ -106,6 +116,8 @@ describe('Blogs SA API', (): void => {
       createPostForBlogSA(testApp.app, createdBlogId),
       createPostForBlogSA(testApp.app, createdBlogId),
     ]);
+
+    const url: string = `/${SETTINGS.GLOBAL_PREFIX}/${SETTINGS.BLOGS_SA_PREFIX}/${createdBlogId}/posts?pageSize=${validPostsPaginationSettings.pageSize}&pageNumber=${validPostsPaginationSettings.pageNumber}&sortDirection=${validPostsPaginationSettings.sortDirection}&sortBy=${validPostsPaginationSettings.sortBy}`;
 
     const getPostListByBlogIdResponse: PaginationMetaDataOutputDTO<PostListOutputDTO> = await getPostListByBlogIdSA(
       testApp.app,
@@ -164,21 +176,102 @@ describe('Blogs SA API', (): void => {
     });
   });
 
-  it('✅ 009 should delete a blog by a correct ID when a valid basic auth token passed; BlogsSaController 007. DELETE', async (): Promise<void> => {
-    const dataSource: DataSource = testApp.app.get<DataSource>(DataSource);
-
-    const createdBlog: BlogOutputDTO = await createBlogSA(testApp.app);
-    const createdBlogId: string = createdBlog.id;
-    await deleteBlogByIdSA(testApp.app, createdBlogId);
-    await getBlogById(testApp.app, createdBlogId, HttpStatus.NOT_FOUND);
-  });
-
-  it('✅ 010 should delete a post and its likes by correct blog and post IDs when a valid basic auth token passed; BlogsSaController 008. DELETE', async (): Promise<void> => {
+  it("✅ 009 should delete a blog with its posts, posts' likes, comments and comments' likes by a correct ID when a valid basic auth token passed; BlogsSaController 007. DELETE", async (): Promise<void> => {
     const createdBlog: BlogOutputDTO = await createBlogSA(testApp.app);
     const createdBlogId: string = createdBlog.id;
     const createdPostForBlog: PostOutputDTO = await createPostForBlogSA(testApp.app, createdBlogId);
     const createdPostForBlogId: string = createdPostForBlog.id;
+    const createUserInputDTO: CreateUserInputDTO = getCreateUserInputDTO();
+    await createConfirmedUserSA(testApp.app, createUserInputDTO);
+
+    const authUserByLoginOrEmailResponse: { AT: string | undefined } = await authUserByLoginOrEmail(
+      testApp.app,
+      createUserInputDTO
+    );
+
+    const createdCommentForPost: CommentOutputDTO = await createCommentForPost(
+      testApp.app,
+      createdPostForBlogId,
+      undefined,
+      undefined,
+      false,
+      authUserByLoginOrEmailResponse.AT
+    );
+
+    const createdCommentForPostId: string = createdCommentForPost.id;
+
+    await updatePostLikeStatusById(
+      testApp.app,
+      createdPostForBlogId,
+      { likeStatus: PostLikeStatusInputDTO.Like },
+      undefined,
+      false,
+      authUserByLoginOrEmailResponse.AT
+    );
+
+    await updateCommentLikeStatusById(
+      testApp.app,
+      createdCommentForPostId,
+      { likeStatus: CommentLikeStatusInputDTO.Like },
+      undefined,
+      false,
+      authUserByLoginOrEmailResponse.AT
+    );
+
+    await deleteBlogByIdSA(testApp.app, createdBlogId);
+    await getBlogById(testApp.app, createdBlogId, HttpStatus.NOT_FOUND);
+    await getPostById(testApp.app, createdPostForBlogId, HttpStatus.NOT_FOUND);
+    expect(await hasPostLikesDataByPostId(testApp.app, createdPostForBlogId)).toBe(false);
+    await getCommentById(testApp.app, createdCommentForPostId, HttpStatus.NOT_FOUND);
+    expect(await hasAnyCommentLikeDataByCommentId(testApp.app, createdCommentForPostId)).toBe(false);
+  });
+
+  it("✅ 010 should delete a post with its likes, its comments and comments' likes by correct blog and post IDs when a valid basic auth token passed; BlogsSaController 008. DELETE", async (): Promise<void> => {
+    const createdBlog: BlogOutputDTO = await createBlogSA(testApp.app);
+    const createdBlogId: string = createdBlog.id;
+    const createdPostForBlog: PostOutputDTO = await createPostForBlogSA(testApp.app, createdBlogId);
+    const createdPostForBlogId: string = createdPostForBlog.id;
+    const createUserInputDTO: CreateUserInputDTO = getCreateUserInputDTO();
+    await createConfirmedUserSA(testApp.app, createUserInputDTO);
+
+    const authUserByLoginOrEmailResponse: { AT: string | undefined } = await authUserByLoginOrEmail(
+      testApp.app,
+      createUserInputDTO
+    );
+
+    const createdCommentForPost: CommentOutputDTO = await createCommentForPost(
+      testApp.app,
+      createdPostForBlogId,
+      undefined,
+      undefined,
+      false,
+      authUserByLoginOrEmailResponse.AT
+    );
+
+    const createdCommentForPostId: string = createdCommentForPost.id;
+
+    await updatePostLikeStatusById(
+      testApp.app,
+      createdPostForBlogId,
+      { likeStatus: PostLikeStatusInputDTO.Like },
+      undefined,
+      false,
+      authUserByLoginOrEmailResponse.AT
+    );
+
+    await updateCommentLikeStatusById(
+      testApp.app,
+      createdCommentForPostId,
+      { likeStatus: CommentLikeStatusInputDTO.Like },
+      undefined,
+      false,
+      authUserByLoginOrEmailResponse.AT
+    );
+
     await deletePostByBlogByAndPostIdSA(testApp.app, createdBlogId, createdPostForBlogId);
     await getPostById(testApp.app, createdPostForBlogId, HttpStatus.NOT_FOUND);
+    expect(await hasPostLikesDataByPostId(testApp.app, createdPostForBlogId)).toBe(false);
+    await getCommentById(testApp.app, createdCommentForPostId, HttpStatus.NOT_FOUND);
+    expect(await hasAnyCommentLikeDataByCommentId(testApp.app, createdCommentForPostId)).toBe(false);
   });
 });

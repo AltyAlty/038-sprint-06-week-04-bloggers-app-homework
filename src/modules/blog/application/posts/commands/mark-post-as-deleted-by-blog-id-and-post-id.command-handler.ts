@@ -39,13 +39,13 @@ export class MarkPostAsDeletedByBlogIdAndPostIdCommandHandler implements IComman
         field: 'id',
       });
 
-    /*Если пост был найден, то просим репозиторий "CommentsRepository" soft удалить все данные о лайках комментария по
+    /*Если пост был найден, то просим репозиторий "CommentsRepository" soft удалить все данные о лайках комментариев по
     ID поста в БД.*/
-    await this.commentsRepository.markAllCommentLikeDataAsDeletedByPostId(id);
+    await this.commentsRepository.markAllCommentsLikesDataAsDeletedByPostId(id);
     /*Просим репозиторий "CommentsRepository" soft удалить все комментарии по ID поста в БД.*/
     await this.commentsRepository.markAllAsDeletedByPostId(id);
     /*Просим репозиторий "PostsRepository" soft удалить все данные о лайках поста по ID поста в БД.*/
-    await this.postsRepository.markAllPostLikeDataAsDeletedByPostId(id);
+    await this.postsRepository.markAllPostLikesDataAsDeletedByPostId(id);
     /*Просим репозиторий "PostsRepository" soft удалить пост по ID в БД.*/
     await this.postsRepository.markAsDeletedById(id);
   }

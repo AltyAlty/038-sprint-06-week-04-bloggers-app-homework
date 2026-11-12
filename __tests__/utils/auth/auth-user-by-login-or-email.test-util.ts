@@ -12,7 +12,12 @@ export const authUserByLoginOrEmail = async (
   expectedStatus?: HttpStatus,
   noUserAgent?: boolean,
   userAgent?: any
-): Promise<{ AT: string }> => {
+): Promise<{
+  AT: string | undefined;
+  RT: string | undefined;
+  hasHttpOnly: boolean | undefined;
+  hasSecure: boolean | undefined;
+}> => {
   const testDTO: AuthUserByLoginOrEmailInputDTO = { ...getAuthUserByLoginOrEmailInputDTO(), ...authDTO };
   const testStatus: HttpStatus = expectedStatus ?? HttpStatus.OK;
   const url: string = `/${SETTINGS.GLOBAL_PREFIX}/${SETTINGS.AUTH_PREFIX}/${SETTINGS.AUTH_AUTHENTICATE_USER_BY_LOGIN_OR_EMAIL_PATH}`;
@@ -29,5 +34,22 @@ export const authUserByLoginOrEmail = async (
   }
 
   const { accessToken } = response.body as { accessToken: string };
-  return { AT: accessToken };
+
+  /*Шаги получения RT:
+  1. ["cookie1=value1; Path=/" , "refreshToken=eyJhbGciOiJIUzI1NiIs...; HttpOnly; Path=/", "cookie3=value3; Path=/"]
+  2. "refreshToken=eyJhbGciOiJIUzI1NiIs...; HttpOnly; Path=/"
+  3. "refreshToken=eyJhbGciOiJIUzI1NiIs..."
+  4. "eyJhbGciOiJIUzI1NiIs..."*/
+  const refreshToken: string | undefined = (response.headers['set-cookie'] as unknown as string[] | undefined)
+    ?.find(cookie => cookie.startsWith('refreshToken='))
+    ?.split(';')[0]
+    ?.split('=')[1];
+
+  const refreshTokenCookieString: string | undefined = (
+    response.headers['set-cookie'] as unknown as string[] | undefined
+  )?.find(cookie => cookie.startsWith('refreshToken='));
+
+  const hasHttpOnly: boolean | undefined = refreshTokenCookieString?.includes('HttpOnly');
+  const hasSecure: boolean | undefined = refreshTokenCookieString?.includes('Secure');
+  return { AT: accessToken, RT: refreshToken, hasHttpOnly, hasSecure };
 };

@@ -86,42 +86,78 @@ export class CommentsRepository {
   }
 
   /*Метод для soft удаления всех данных о лайках комментария по ID комментария в БД.*/
-  public async markAllCommentLikeDataAsDeletedByCommentId(commentId: string): Promise<void> {
+  public async markAllCommentLikesDataAsDeletedByCommentId(commentId: string): Promise<void> {
     await this.commentLikesDataRepository.softDelete({ commentId });
   }
 
   /*Метод для hard удаления всех данных о лайках комментария по ID комментария в БД.*/
-  public async deleteAllCommentLikeDataByCommentId(commentId: string): Promise<void> {
+  public async deleteAllCommentLikesDataByCommentId(commentId: string): Promise<void> {
     await this.commentLikesDataRepository.delete({ commentId });
   }
 
   /*Метод для soft удаления всех данных о лайках комментариев по ID поста в БД.*/
-  public async markAllCommentLikeDataAsDeletedByPostId(postId: string): Promise<void> {
+  public async markAllCommentsLikesDataAsDeletedByPostId(postId: string): Promise<void> {
     await this.commentLikesDataRepository.softDelete({ postId });
   }
 
   /*Метод для hard удаления всех данных о лайках комментариев по ID поста в БД.*/
-  public async deleteAllCommentLikeDataByPostId(postId: string): Promise<void> {
+  public async deleteAllCommentsLikesDataByPostId(postId: string): Promise<void> {
     await this.commentLikesDataRepository.delete({ postId });
   }
 
-  /*Метод для soft удаления всех данных о лайках комментария по ID блога в БД.*/
-  public async markAllCommentLikeDataAsDeletedByBlogId(blogId: string): Promise<void> {
+  /*Метод для soft удаления всех данных о лайках комментариев по ID блога в БД.*/
+  public async markAllCommentsLikesDataAsDeletedByBlogId(blogId: string): Promise<void> {
     await this.commentLikesDataRepository.softDelete({ blogId });
   }
 
-  /*Метод для hard удаления всех данных о лайках комментария по ID блога в БД.*/
-  public async deleteAllCommentLikeDataByBlogId(blogId: string): Promise<void> {
+  /*Метод для hard удаления всех данных о лайках комментариев по ID блога в БД.*/
+  public async deleteAllCommentsLikesDataByBlogId(blogId: string): Promise<void> {
     await this.commentLikesDataRepository.delete({ blogId });
   }
 
-  /*Метод для soft удаления всех данных о лайках комментария по ID пользователя в БД.*/
-  public async markAllCommentLikeDataAsDeletedByUserId(userId: string): Promise<void> {
+  /*Метод для soft удаления всех данных о лайках комментариев по ID пользователя в БД.*/
+  public async markAllCommentsLikesDataAsDeletedByUserId(userId: string): Promise<void> {
     await this.commentLikesDataRepository.softDelete({ userId });
   }
 
-  /*Метод для hard удаления всех данных о лайках комментария по ID пользователя в БД.*/
-  public async deleteAllCommentLikeDataByUserId(userId: string): Promise<void> {
+  /*Метод для hard удаления всех данных о лайках комментариев по ID пользователя в БД.*/
+  public async deleteAllCommentsLikesDataByUserId(userId: string): Promise<void> {
     await this.commentLikesDataRepository.delete({ userId });
+  }
+
+  /*Метод для soft удаления всех данных о лайках комментариев, созданных пользователем, по ID этого пользователя в БД.*/
+  public async markAllCommentsLikesDataAsDeletedByCommentsAuthorId(authorId: string): Promise<void> {
+    const commentsSubQuery: string = this.commentsRepository
+      .createQueryBuilder('comment')
+      .select('comment.id')
+      .withDeleted()
+      .where('comment.userId = :authorId')
+      .getQuery();
+
+    await this.commentLikesDataRepository
+      .createQueryBuilder()
+      .softDelete()
+      .where(`"comment_id" IN (${commentsSubQuery})`)
+      .andWhere('"deleted_at" IS NULL')
+      .setParameter('authorId', authorId)
+      .execute();
+  }
+
+  /*Метод для hard удаления всех данных о лайках комментариев, созданных пользователем, по ID этого пользователя в БД.*/
+  public async deleteAllCommentsLikesDataByCommentsAuthorId(authorId: string): Promise<void> {
+    const commentsSubQuery: string = this.commentsRepository
+      .createQueryBuilder('comment')
+      .select('comment.id')
+      .withDeleted()
+      .where('comment.userId = :authorId')
+      .getQuery();
+
+    await this.commentLikesDataRepository
+      .createQueryBuilder()
+      .delete()
+      .where(`"comment_id" IN (${commentsSubQuery})`)
+      .andWhere('"deleted_at" IS NULL')
+      .setParameter('authorId', authorId)
+      .execute();
   }
 }
