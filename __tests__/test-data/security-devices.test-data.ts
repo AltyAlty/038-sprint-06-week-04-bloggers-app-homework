@@ -1,6 +1,6 @@
-// import { ObjectId } from 'mongodb';
+import { v7 } from 'uuid';
 
-// export const validDeviceIds = { id_01: new ObjectId().toString() };
+export const validDeviceIds = { id_01: v7() };
 
 export const invalidDeviceIds = {
   id_01: 'ABC',

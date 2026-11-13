@@ -1,4 +1,4 @@
-// import { ObjectId } from 'mongodb';
+import { v7 } from 'uuid';
 
 export const validCommentsPaginationSettings = {
   pageSize: 5,
@@ -14,7 +14,7 @@ export const invalidCommentsPaginationSettings = {
   sortBy: 'description',
 };
 
-// export const validCommentIds = { id_01: new ObjectId().toString() };
+export const validCommentIds = { id_01: v7() };
 
 export const invalidCommentIds = {
   id_01: 'ABC',

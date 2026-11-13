@@ -7,16 +7,16 @@ import { BlogListOutputDTO, BlogOutputDTO } from '../../../src/modules/blog/api/
 import { PostListOutputDTO, PostOutputDTO } from '../../../src/modules/blog/api/posts/output-dto/post.output-dto';
 import { validBlogNames, validBlogsPaginationSettings } from '../../test-data/blogs.test-data';
 import { validPostsPaginationSettings, validPostTitles } from '../../test-data/posts.test-data';
-import { authUserByLoginOrEmail } from '../../utils/auth/auth-user-by-login-or-email.test-util';
-import { createBlogSA } from '../../utils/blogs/create-blog-sa.test-util';
-import { getBlogById } from '../../utils/blogs/get-blog-by-id.test-util';
-import { getBlogList } from '../../utils/blogs/get-blog-list.test-util';
-import { doBeforeTests } from '../../utils/common/do-before-tests.test-util';
-import { createPostForBlogSA } from '../../utils/post/create-post-for-blog-sa.test-util';
-import { getPostListByBlogId } from '../../utils/post/get-post-list-by-blog-id.test-util';
-import { updatePostLikeStatusById } from '../../utils/post/update-post-like-status-by-id.test-util';
-import { createConfirmedUserSA } from '../../utils/users/create-confirmed-user-sa.test-util';
-import { getCreateUserInputDTO } from '../../utils/users/input-dto-utils/get-create-user-input-dto.test-util';
+import { authUserByLoginOrEmail } from '../../test-utils/auth/auth-user-by-login-or-email.test-util';
+import { createBlogSA } from '../../test-utils/blogs/create-blog-sa.test-util';
+import { getBlogById } from '../../test-utils/blogs/get-blog-by-id.test-util';
+import { getBlogList } from '../../test-utils/blogs/get-blog-list.test-util';
+import { doBeforeTests } from '../../test-utils/common/do-before-tests.test-util';
+import { createPostForBlogSA } from '../../test-utils/post/create-post-for-blog-sa.test-util';
+import { getPostListByBlogId } from '../../test-utils/post/get-post-list-by-blog-id.test-util';
+import { updatePostLikeStatusById } from '../../test-utils/post/update-post-like-status-by-id.test-util';
+import { createConfirmedUserSA } from '../../test-utils/users/create-confirmed-user-sa.test-util';
+import { getCreateUserInputDTO } from '../../test-utils/users/input-dto-utils/get-create-user-input-dto.test-util';
 
 describe('Blogs API', (): void => {
   const testApp: { readonly app: NestExpressApplication } = doBeforeTests();

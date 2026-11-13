@@ -1,4 +1,4 @@
-// import { ObjectId } from 'mongodb';
+import { v7 } from 'uuid';
 
 export const validPostsPaginationSettings = {
   pageSize: 5,
@@ -14,7 +14,7 @@ export const invalidPostsPaginationSettings = {
   sortBy: 'description',
 };
 
-// export const validPostIds = { id_01: new ObjectId().toString() };
+export const validPostIds = { id_01: v7() };
 
 export const invalidPostIds = {
   id_01: 'ABC',

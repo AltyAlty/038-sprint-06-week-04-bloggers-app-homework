@@ -1,22 +1,7 @@
 import { add } from 'date-fns/add';
 import { v7 } from 'uuid';
-import { SETTINGS } from '../../src/core/settings/settings';
-// import { ObjectId } from 'mongodb';
-// import { JwtAdapter } from '../../src/auth/adapters/jwt.adapter';
-import { invalidDeviceIds } from './security-devices.test-data';
-import { invalidUserIds } from './users.test-data';
-
-/*В тестах создаем локальный экземпляр, так как:
-1. Тестовые данные будут полностью независимы от того, как сконфигурирован контейнер в самом приложении.
-2. При импорте этого файла не будет запускаться тяжелая логика инициализации контейнера.
-3. Не засоряем "composition-root.ts" зависимостями, которые не нужны роутерам.*/
-// const testJwtAdapter = new JwtAdapter();
 
 export const invalidBasicAuthTokens = { BAT_01: 'token' };
-
-export const validAccessTokens = {
-  // AT_01: testJwtAdapter.createAccessTokenSync(new ObjectId().toString(), SETTINGS.AT_SECRET!, SETTINGS.AT_TIME!),
-};
 
 export const invalidAccessTokens = {
   AT_01: '',
@@ -27,17 +12,7 @@ export const invalidAccessTokens = {
   AT_06: undefined,
   AT_07: [],
   AT_08: {},
-  // AT_09: testJwtAdapter.createAccessTokenSync(invalidUserIds.id_01, SETTINGS.AT_SECRET!, SETTINGS.AT_TIME!),
 };
-
-// export const validRefreshTokens = {
-//   RT_01: testJwtAdapter.createRefreshTokenSync(
-//     new ObjectId().toString(),
-//     new ObjectId().toString(),
-//     SETTINGS.RT_SECRET!,
-//     SETTINGS.RT_TIME!
-//   ),
-// };
 
 export const invalidRefreshTokens = {
   RT_01: '',
@@ -48,13 +23,6 @@ export const invalidRefreshTokens = {
   RT_06: undefined,
   RT_07: [],
   RT_08: {},
-
-  // RT_09: testJwtAdapter.createRefreshTokenSync(
-  //   invalidUserIds.id_01,
-  //   invalidDeviceIds.id_01,
-  //   SETTINGS.RT_SECRET!,
-  //   SETTINGS.RT_TIME!
-  // ),
 };
 
 export const invalidConfirmationCodes = {
@@ -80,9 +48,9 @@ export const invalidUserAgents = {
   userAgent_02: '   ',
 };
 
-export const validUUIDRegExp = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+export const validUUIDv7RegExp = /^[0-9a-f]{8}-[0-9a-f]{4}-7[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
 
-export const validUUIDs = { uuid_01: '11111111-1111-1111-1111-111111111111' };
+export const validUUIDs = { uuid_01: '01900000-0000-7000-8000-000000000001' };
 
 export const expiredUserEmailConfirmationData = {
   confirmationCode: v7(),
@@ -103,4 +71,9 @@ export const invalidRecoveryCodes = {
 export const expiredRecoveryCodeData = {
   recoveryCode: v7(),
   expirationDate: add(new Date(), { seconds: -1 }),
+};
+
+export const invalidJwtSingOptions = {
+  expired: { expiresIn: -10 },
+  wrongSecret: { secret: 'wrong-secret' },
 };

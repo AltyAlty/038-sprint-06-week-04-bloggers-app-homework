@@ -16,25 +16,25 @@ import {
   validUserPasswords,
   validUsersPaginationSettings,
 } from '../../test-data/users.test-data';
-import { authUserByLoginOrEmail } from '../../utils/auth/auth-user-by-login-or-email.test-util';
-import { hasAnySessionByUserId } from '../../utils/auth/has-any-session-by-user-id.test-util';
-import { hasEmailConfirmationsByUserId } from '../../utils/auth/has-email-confirmations-by-user-id.test-util';
-import { hasPasswordRecoveryCodesDataByUserId } from '../../utils/auth/has-password-recovery-codes-data-by-user-id.test-util';
-import { createBlogSA } from '../../utils/blogs/create-blog-sa.test-util';
-import { createCommentForPost } from '../../utils/comments/create-comment-for-post.test-util';
-import { getCommentById } from '../../utils/comments/get-comment-by-id.test-util';
-import { hasAnyCommentLikeDataByCommentId } from '../../utils/comments/has-any-comment-like-data-by-comment-id.test-util';
-import { updateCommentLikeStatusById } from '../../utils/comments/update-comment-like-status-by-id.test-util';
-import { doBeforeTests } from '../../utils/common/do-before-tests.test-util';
-import { createPostForBlogSA } from '../../utils/post/create-post-for-blog-sa.test-util';
-import { hasPostLikesDataByPostId } from '../../utils/post/has-post-likes-data-by-post-id.test-util';
-import { updatePostLikeStatusById } from '../../utils/post/update-post-like-status-by-id.test-util';
-import { hasAnySecurityDeviceByUserId } from '../../utils/security-devices/has-any-security-device-by-user-id.test-util';
-import { createConfirmedUserSA } from '../../utils/users/create-confirmed-user-sa.test-util';
-import { deleteUserByIdSA } from '../../utils/users/delete-user-by-id-sa.test-util';
-import { getUserListSA } from '../../utils/users/get-user-list-sa.test-util';
-import { getCreateUserInputDTO } from '../../utils/users/input-dto-utils/get-create-user-input-dto.test-util';
-import { isUserConfirmedByUserIdTestUtil } from '../../utils/users/is-user-confirmed-by-user-id.test-util';
+import { authUserByLoginOrEmail } from '../../test-utils/auth/auth-user-by-login-or-email.test-util';
+import { hasAnySessionByUserId } from '../../test-utils/auth/has-any-session-by-user-id.test-util';
+import { hasEmailConfirmationsByUserId } from '../../test-utils/auth/has-email-confirmations-by-user-id.test-util';
+import { hasPasswordRecoveryCodesDataByUserId } from '../../test-utils/auth/has-password-recovery-codes-data-by-user-id.test-util';
+import { createBlogSA } from '../../test-utils/blogs/create-blog-sa.test-util';
+import { createCommentForPost } from '../../test-utils/comments/create-comment-for-post.test-util';
+import { getCommentById } from '../../test-utils/comments/get-comment-by-id.test-util';
+import { hasAnyCommentLikeDataByCommentId } from '../../test-utils/comments/has-any-comment-like-data-by-comment-id.test-util';
+import { updateCommentLikeStatusById } from '../../test-utils/comments/update-comment-like-status-by-id.test-util';
+import { doBeforeTests } from '../../test-utils/common/do-before-tests.test-util';
+import { createPostForBlogSA } from '../../test-utils/post/create-post-for-blog-sa.test-util';
+import { hasPostLikesDataByPostId } from '../../test-utils/post/has-post-likes-data-by-post-id.test-util';
+import { updatePostLikeStatusById } from '../../test-utils/post/update-post-like-status-by-id.test-util';
+import { hasAnySecurityDeviceByUserId } from '../../test-utils/security-devices/has-any-security-device-by-user-id.test-util';
+import { createConfirmedUserSA } from '../../test-utils/users/create-confirmed-user-sa.test-util';
+import { deleteUserByIdSA } from '../../test-utils/users/delete-user-by-id-sa.test-util';
+import { getUserListSA } from '../../test-utils/users/get-user-list-sa.test-util';
+import { getCreateUserInputDTO } from '../../test-utils/users/input-dto-utils/get-create-user-input-dto.test-util';
+import { isUserConfirmedByUserIdTestUtil } from '../../test-utils/users/is-user-confirmed-by-user-id.test-util';
 
 describe('Users SA API', (): void => {
   const testApp: { readonly app: NestExpressApplication } = doBeforeTests();

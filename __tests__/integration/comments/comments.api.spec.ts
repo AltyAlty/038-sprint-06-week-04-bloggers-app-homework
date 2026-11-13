@@ -8,19 +8,19 @@ import { CommentOutputDTO } from '../../../src/modules/blog/api/comments/output-
 import { PostOutputDTO } from '../../../src/modules/blog/api/posts/output-dto/post.output-dto';
 import { UserOutputDTO } from '../../../src/modules/user/api/users/output-dto/user.output-dto';
 import { validUserEmails, validUserLogins, validUserPasswords } from '../../test-data/users.test-data';
-import { authUserByLoginOrEmail } from '../../utils/auth/auth-user-by-login-or-email.test-util';
-import { createBlogSA } from '../../utils/blogs/create-blog-sa.test-util';
-import { createCommentForPost } from '../../utils/comments/create-comment-for-post.test-util';
-import { deleteCommentById } from '../../utils/comments/delete-comment-by-id.test-util';
-import { getCommentById } from '../../utils/comments/get-comment-by-id.test-util';
-import { hasAnyCommentLikeDataByCommentId } from '../../utils/comments/has-any-comment-like-data-by-comment-id.test-util';
-import { getUpdateCommentByIdInputDTO } from '../../utils/comments/input-dto-utils/get-update-comment-by-id-input-dto.test-util';
-import { updateCommentById } from '../../utils/comments/update-comment-by-id.test-util';
-import { updateCommentLikeStatusById } from '../../utils/comments/update-comment-like-status-by-id.test-util';
-import { doBeforeTests } from '../../utils/common/do-before-tests.test-util';
-import { createPostForBlogSA } from '../../utils/post/create-post-for-blog-sa.test-util';
-import { createConfirmedUserSA } from '../../utils/users/create-confirmed-user-sa.test-util';
-import { getCreateUserInputDTO } from '../../utils/users/input-dto-utils/get-create-user-input-dto.test-util';
+import { authUserByLoginOrEmail } from '../../test-utils/auth/auth-user-by-login-or-email.test-util';
+import { createBlogSA } from '../../test-utils/blogs/create-blog-sa.test-util';
+import { createCommentForPost } from '../../test-utils/comments/create-comment-for-post.test-util';
+import { deleteCommentById } from '../../test-utils/comments/delete-comment-by-id.test-util';
+import { getCommentById } from '../../test-utils/comments/get-comment-by-id.test-util';
+import { hasAnyCommentLikeDataByCommentId } from '../../test-utils/comments/has-any-comment-like-data-by-comment-id.test-util';
+import { getUpdateCommentByIdInputDTO } from '../../test-utils/comments/input-dto-utils/get-update-comment-by-id-input-dto.test-util';
+import { updateCommentById } from '../../test-utils/comments/update-comment-by-id.test-util';
+import { updateCommentLikeStatusById } from '../../test-utils/comments/update-comment-like-status-by-id.test-util';
+import { doBeforeTests } from '../../test-utils/common/do-before-tests.test-util';
+import { createPostForBlogSA } from '../../test-utils/post/create-post-for-blog-sa.test-util';
+import { createConfirmedUserSA } from '../../test-utils/users/create-confirmed-user-sa.test-util';
+import { getCreateUserInputDTO } from '../../test-utils/users/input-dto-utils/get-create-user-input-dto.test-util';
 
 describe('Comments API', (): void => {
   const testApp: { readonly app: NestExpressApplication } = doBeforeTests();

@@ -1,4 +1,4 @@
-// import { ObjectId } from 'mongodb';
+import { v7 } from 'uuid';
 
 export const validUsersPaginationSettings = {
   pageSize: 5,
@@ -83,7 +83,7 @@ export const invalidUserPasswords = {
   password_06: null,
 };
 
-// export const validUserIds = { id_01: new ObjectId().toString() };
+export const validUserIds = { id_01: v7() };
 
 export const invalidUserIds = {
   id_01: 'ABC',

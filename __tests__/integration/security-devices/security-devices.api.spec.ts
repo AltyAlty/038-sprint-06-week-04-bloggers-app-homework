@@ -12,19 +12,19 @@ import {
 } from '../../../src/modules/user/api/security-devices/output-dto/security-device.output-dto';
 import { UserListOutputDTO } from '../../../src/modules/user/api/users/output-dto/user.output-dto';
 import { validUserAgents } from '../../test-data/auth.test-data';
-import { authUserByLoginOrEmail } from '../../utils/auth/auth-user-by-login-or-email.test-util';
-import { confirmUserByCode } from '../../utils/auth/confirm-user-by-code.test-util';
-import { decodeRefreshToken } from '../../utils/auth/decode-refresh-token.test-util';
-import { getEmailConfirmationListByUserId } from '../../utils/auth/get-email-confirmation-list-by-user-id.test-util';
-import { getSessionListByUserId } from '../../utils/auth/get-session-list-by-user-id.test-util';
-import { registerUser } from '../../utils/auth/register-user.test-util';
-import { revokeAllSessionsExceptCurrentOne } from '../../utils/auth/revoke-all-sessions-except-current-one.test-util';
-import { revokeSessionBySecurityDeviceIdList } from '../../utils/auth/revoke-session-by-security-device-id-list.test-util';
-import { doBeforeTests } from '../../utils/common/do-before-tests.test-util';
-import { getSecurityDeviceList } from '../../utils/security-devices/get-security-device-list.test-util';
-import { getSecurityDeviceListByUserId } from '../../utils/security-devices/get-security-device-list-by-user-id.test-util';
-import { getUserListSA } from '../../utils/users/get-user-list-sa.test-util';
-import { getCreateUserInputDTO } from '../../utils/users/input-dto-utils/get-create-user-input-dto.test-util';
+import { authUserByLoginOrEmail } from '../../test-utils/auth/auth-user-by-login-or-email.test-util';
+import { confirmUserByCode } from '../../test-utils/auth/confirm-user-by-code.test-util';
+import { decodeRefreshToken } from '../../test-utils/auth/decode-refresh-token.test-util';
+import { getEmailConfirmationListByUserId } from '../../test-utils/auth/get-email-confirmation-list-by-user-id.test-util';
+import { getSessionListByUserId } from '../../test-utils/auth/get-session-list-by-user-id.test-util';
+import { registerUser } from '../../test-utils/auth/register-user.test-util';
+import { revokeAllSessionsExceptCurrentOne } from '../../test-utils/auth/revoke-all-sessions-except-current-one.test-util';
+import { revokeSessionBySecurityDeviceIdList } from '../../test-utils/auth/revoke-session-by-security-device-id-list.test-util';
+import { doBeforeTests } from '../../test-utils/common/do-before-tests.test-util';
+import { getSecurityDeviceList } from '../../test-utils/security-devices/get-security-device-list.test-util';
+import { getSecurityDeviceListByUserId } from '../../test-utils/security-devices/get-security-device-list-by-user-id.test-util';
+import { getUserListSA } from '../../test-utils/users/get-user-list-sa.test-util';
+import { getCreateUserInputDTO } from '../../test-utils/users/input-dto-utils/get-create-user-input-dto.test-util';
 
 describe('Security Devices API', (): void => {
   const testApp: { readonly app: NestExpressApplication } = doBeforeTests();
